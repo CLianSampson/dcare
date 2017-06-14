@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcare.dao.BloodPressureDO" >
+  <resultMap id="BaseResultMap" type="com.dcare.po.BloodPressure" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userId" jdbcType="INTEGER" />
+    <result column="familyUserId" property="familyUserId" jdbcType="INTEGER" />
+    <result column="systolic" property="systolic" jdbcType="REAL" />
+    <result column="diastolic" property="diastolic" jdbcType="REAL" />
+    <result column="heartRate" property="heartRate" jdbcType="REAL" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, familyUserId, systolic, diastolic, heartRate, createTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bloodpressure
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bloodpressure
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dcare.po.BloodPressure" >
+    insert into bloodpressure (id, userId, familyUserId, 
+      systolic, diastolic, heartRate, 
+      createTime)
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{familyUserId,jdbcType=INTEGER}, 
+      #{systolic,jdbcType=REAL}, #{diastolic,jdbcType=REAL}, #{heartRate,jdbcType=REAL}, 
+      #{createTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcare.po.BloodPressure" >
+    insert into bloodpressure
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="familyUserId != null" >
+        familyUserId,
+      </if>
+      <if test="systolic != null" >
+        systolic,
+      </if>
+      <if test="diastolic != null" >
+        diastolic,
+      </if>
+      <if test="heartRate != null" >
+        heartRate,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="familyUserId != null" >
+        #{familyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="systolic != null" >
+        #{systolic,jdbcType=REAL},
+      </if>
+      <if test="diastolic != null" >
+        #{diastolic,jdbcType=REAL},
+      </if>
+      <if test="heartRate != null" >
+        #{heartRate,jdbcType=REAL},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcare.po.BloodPressure" >
+    update bloodpressure
+    <set >
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="familyUserId != null" >
+        familyUserId = #{familyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="systolic != null" >
+        systolic = #{systolic,jdbcType=REAL},
+      </if>
+      <if test="diastolic != null" >
+        diastolic = #{diastolic,jdbcType=REAL},
+      </if>
+      <if test="heartRate != null" >
+        heartRate = #{heartRate,jdbcType=REAL},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcare.po.BloodPressure" >
+    update bloodpressure
+    set userId = #{userId,jdbcType=INTEGER},
+      familyUserId = #{familyUserId,jdbcType=INTEGER},
+      systolic = #{systolic,jdbcType=REAL},
+      diastolic = #{diastolic,jdbcType=REAL},
+      heartRate = #{heartRate,jdbcType=REAL},
+      createTime = #{createTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+ 
+   <select id="selectByFamilyUserId" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+   from bloodpressure
+   WHERE familyUserId = #{familyUserId} 
+   LIMIT #{pageNo},#{pageSize} 
+  </select>
+  
+  
+</mapper>

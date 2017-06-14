@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcare.dao.UpgradeDO" >
+  <resultMap id="BaseResultMap" type="com.dcare.po.Upgrade" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="version" property="version" jdbcType="INTEGER" />
+    <result column="lowestVersion" property="lowestVersion" jdbcType="INTEGER" />
+    <result column="vName" property="vName" jdbcType="VARCHAR" />
+    <result column="channel" property="channel" jdbcType="INTEGER" />
+    <result column="path" property="path" jdbcType="VARCHAR" />
+    <result column="platform" property="platform" jdbcType="INTEGER" />
+    <result column="updateForce" property="updateForce" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="createUserId" property="createUserId" jdbcType="VARCHAR" />
+    <result column="updateUserId" property="updateUserId" jdbcType="VARCHAR" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <resultMap id="ResultMapWithBLOBs" type="com.dcare.po.Upgrade" extends="BaseResultMap" >
+    <result column="description" property="description" jdbcType="LONGVARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, version, lowestVersion, vName, channel, path, platform, updateForce, createTime, 
+    createUserId, updateUserId, updateTime
+  </sql>
+  <sql id="Blob_Column_List" >
+    description
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from upgrade
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from upgrade
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dcare.po.Upgrade" >
+    insert into upgrade (id, version, lowestVersion, 
+      vName, channel, path, 
+      platform, updateForce, createTime, 
+      createUserId, updateUserId, updateTime, 
+      description)
+    values (#{id,jdbcType=INTEGER}, #{version,jdbcType=INTEGER}, #{lowestVersion,jdbcType=INTEGER}, 
+      #{vName,jdbcType=VARCHAR}, #{channel,jdbcType=INTEGER}, #{path,jdbcType=VARCHAR}, 
+      #{platform,jdbcType=INTEGER}, #{updateForce,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{createUserId,jdbcType=VARCHAR}, #{updateUserId,jdbcType=VARCHAR}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{description,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcare.po.Upgrade" >
+    insert into upgrade
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="version != null" >
+        version,
+      </if>
+      <if test="lowestVersion != null" >
+        lowestVersion,
+      </if>
+      <if test="vName != null" >
+        vName,
+      </if>
+      <if test="channel != null" >
+        channel,
+      </if>
+      <if test="path != null" >
+        path,
+      </if>
+      <if test="platform != null" >
+        platform,
+      </if>
+      <if test="updateForce != null" >
+        updateForce,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="createUserId != null" >
+        createUserId,
+      </if>
+      <if test="updateUserId != null" >
+        updateUserId,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="version != null" >
+        #{version,jdbcType=INTEGER},
+      </if>
+      <if test="lowestVersion != null" >
+        #{lowestVersion,jdbcType=INTEGER},
+      </if>
+      <if test="vName != null" >
+        #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="updateForce != null" >
+        #{updateForce,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcare.po.Upgrade" >
+    update upgrade
+    <set >
+      <if test="version != null" >
+        version = #{version,jdbcType=INTEGER},
+      </if>
+      <if test="lowestVersion != null" >
+        lowestVersion = #{lowestVersion,jdbcType=INTEGER},
+      </if>
+      <if test="vName != null" >
+        vName = #{vName,jdbcType=VARCHAR},
+      </if>
+      <if test="channel != null" >
+        channel = #{channel,jdbcType=INTEGER},
+      </if>
+      <if test="path != null" >
+        path = #{path,jdbcType=VARCHAR},
+      </if>
+      <if test="platform != null" >
+        platform = #{platform,jdbcType=INTEGER},
+      </if>
+      <if test="updateForce != null" >
+        updateForce = #{updateForce,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="createUserId != null" >
+        createUserId = #{createUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateUserId != null" >
+        updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dcare.po.Upgrade" >
+    update upgrade
+    set version = #{version,jdbcType=INTEGER},
+      lowestVersion = #{lowestVersion,jdbcType=INTEGER},
+      vName = #{vName,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      updateForce = #{updateForce,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      description = #{description,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcare.po.Upgrade" >
+    update upgrade
+    set version = #{version,jdbcType=INTEGER},
+      lowestVersion = #{lowestVersion,jdbcType=INTEGER},
+      vName = #{vName,jdbcType=VARCHAR},
+      channel = #{channel,jdbcType=INTEGER},
+      path = #{path,jdbcType=VARCHAR},
+      platform = #{platform,jdbcType=INTEGER},
+      updateForce = #{updateForce,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      createUserId = #{createUserId,jdbcType=VARCHAR},
+      updateUserId = #{updateUserId,jdbcType=VARCHAR},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  <select id="selectMaxVersion" resultMap="ResultMapWithBLOBs" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from upgrade
+    where platform = #{platform}
+    and version > #{version}
+  </select>
+  
+</mapper>

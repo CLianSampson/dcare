@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd  
+       http://www.springframework.org/schema/tx   
+       http://www.springframework.org/schema/tx/spring-tx.xsd
+       http://www.springframework.org/schema/aop  
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/context   
+  	   http://www.springframework.org/schema/context/spring-context-3.0.xsd">
+
+    <!-- 引用各模块的spring配置文件 -->
+    <import resource="classpath*:datasource.xml"></import>
+	
+	<!--  
+	<context:component-scan base-package="com.dcare*">
+		<context:exclude-filter type="regex" expression="com.dcare.controller*" />   
+	</context:component-scan>
+	 -->
+	
+	<!-- 扫描注解,过滤掉Controller -->   <!-- 这句作用就是告诉spring你放开Controller注解，留着让springmvc来  -->
+    <context:component-scan base-package="com.dcare">
+        <context:exclude-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver"
+          p:defaultEncoding="utf-8"/>
+
+    <!-- 配置事物 -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+	
+	
+	<bean id="initBean" class="com.dcare.bean.InitBean">
+	</bean>
+	
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <!-- the transactional semantics... -->
+        <tx:attributes>
+            <!-- all methods starting with '*' are read-only -->
+            <tx:method name="*" propagation="SUPPORTS" read-only="true"/>
+            <!-- other methods use the default transaction settings (see below) -->
+            <tx:method name="add*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="save*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="update*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="delete*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="create*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="trans*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="pay*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="summary*" propagation="REQUIRED" rollback-for="Exception"/>
+            <tx:method name="cancel*" propagation="REQUIRED" rollback-for="Exception"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <aop:config>
+        <aop:pointcut id="businessService"
+                      expression="execution(* com.dcare.service.impl.*Impl.*(..) ) "/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="businessService"/>
+    </aop:config>
+
+</beans>
+
