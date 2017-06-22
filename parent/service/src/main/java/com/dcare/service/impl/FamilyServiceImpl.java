@@ -23,13 +23,15 @@ public class FamilyServiceImpl implements FamilyService{
 	public AppErrorEnums addFamilyMember(Family family) {
 		
 		List<Family> families = familyDO.selectByUserId(family.getUserId());
-		if (null != families && families.size()!=0) {
-			for (Family temp : families) {
-				if (temp.getRelation().equals(family.getRelation())) {
-					return AppErrorEnums.APP_ERROR_FAMILY_RELATION_EXIST;
-				}
-			}
-		}
+		
+		//去掉一个关系只能添加一个人的限制
+//		if (null != families && families.size()!=0) {
+//			for (Family temp : families) {
+//				if (temp.getRelation().equals(family.getRelation())) {
+//					return AppErrorEnums.APP_ERROR_FAMILY_RELATION_EXIST;
+//				}
+//			}
+//		}
 		
 		
 		familyDO.insertSelective(family);

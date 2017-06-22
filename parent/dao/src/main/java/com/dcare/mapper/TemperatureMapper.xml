@@ -23,22 +23,22 @@
     ,
     <include refid="Blob_Column_List" />
     from temperature
-    where userId = #{userId,jdbcType=INTEGER}
-      and time = #{time,jdbcType=TIMESTAMP}
-      and familyUserId = #{familyUserId,jdbcType=INTEGER}
+    where userId = #{userId}
+      and time = #{time}
+      and familyUserId = #{familyUserId}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="com.dcare.po.TemperatureKey" >
     delete from temperature
-    where userId = #{userId,jdbcType=INTEGER}
-      and time = #{time,jdbcType=TIMESTAMP}
-      and familyUserId = #{familyUserId,jdbcType=INTEGER}
+    where userId = #{userId}
+      and time = #{time}
+      and familyUserId = #{familyUserId}
   </delete>
   <insert id="insert" parameterType="com.dcare.po.Temperature" >
     insert into temperature (userId, time, familyUserId, 
       createTime, updateTime, temperature
       )
-    values (#{userId,jdbcType=INTEGER}, #{time,jdbcType=TIMESTAMP}, #{familyUserId,jdbcType=INTEGER}, 
-      #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, #{temperature,jdbcType=LONGVARCHAR}
+    values (#{userId}, #{time}, #{familyUserId}, 
+      #{createTime}, #{updateTime}, #{temperature}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dcare.po.Temperature" >
@@ -65,22 +65,22 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId},
       </if>
       <if test="time != null" >
-        #{time,jdbcType=TIMESTAMP},
+        #{time},
       </if>
       <if test="familyUserId != null" >
-        #{familyUserId,jdbcType=INTEGER},
+        #{familyUserId},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime},
       </if>
       <if test="temperature != null" >
-        #{temperature,jdbcType=LONGVARCHAR},
+        #{temperature},
       </if>
     </trim>
   </insert>
@@ -88,35 +88,36 @@
     update temperature
     <set >
       <if test="createTime != null" >
-        createTime = #{createTime,jdbcType=TIMESTAMP},
+        createTime = #{createTime},
       </if>
       <if test="updateTime != null" >
-        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+        updateTime = #{updateTime},
       </if>
       <if test="temperature != null" >
-        temperature = #{temperature,jdbcType=LONGVARCHAR},
+        temperature = #{temperature},
       </if>
     </set>
-    where userId = #{userId,jdbcType=INTEGER}
-      and time = #{time,jdbcType=TIMESTAMP}
-      and familyUserId = #{familyUserId,jdbcType=INTEGER}
+    where userId = #{userId}
+      and time = #{time}
+      and familyUserId = #{familyUserId}
   </update>
   <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.dcare.po.Temperature" >
     update temperature
-    set createTime = #{createTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP},
-      temperature = #{temperature,jdbcType=LONGVARCHAR}
-    where userId = #{userId,jdbcType=INTEGER}
-      and time = #{time,jdbcType=TIMESTAMP}
-      and familyUserId = #{familyUserId,jdbcType=INTEGER}
+    set createTime = #{createTime},
+      updateTime = #{updateTime},
+      temperature = #{temperature}
+    where userId = #{userId}
+      and time = #{time}
+      and familyUserId = #{familyUserId}
   </update>
+  
   <update id="updateByPrimaryKey" parameterType="com.dcare.po.Temperature" >
     update temperature
-    set createTime = #{createTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP}
-    where userId = #{userId,jdbcType=INTEGER}
-      and time = #{time,jdbcType=TIMESTAMP}
-      and familyUserId = #{familyUserId,jdbcType=INTEGER}
+    set createTime = #{createTime},
+      updateTime = #{updateTime}
+    where userId = #{userId}
+      and time = #{time}
+      and familyUserId = #{familyUserId}
   </update>
   
   
@@ -127,8 +128,16 @@
     <include refid="Blob_Column_List" />
     from temperature
     where
-      and time = #{time}
-      and familyUserId = #{familyUserId}
+       1=1
+       <if test="userId != null" >
+        and userId = #{userId}
+      </if>
+      <if test="time != null">
+        and time = #{time}
+      </if>
+      <if test ="familyUserId != null">
+         and familyUserId = #{familyUserId}
+      </if>
   </select>
   
 </mapper>

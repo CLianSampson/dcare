@@ -7,7 +7,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.log4j.Logger;
@@ -19,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.dcare.ao.LoginAO;
-import com.dcare.ao.SmsAO;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
@@ -27,6 +25,7 @@ import com.dcare.common.util.TokenUtil;
 import com.dcare.dao.FamilyDO;
 import com.dcare.dao.UserDO;
 import com.dcare.po.Family;
+import com.dcare.po.Sms;
 import com.dcare.po.User;
 import com.dcare.service.SmsService;
 
@@ -45,16 +44,13 @@ public class LoginController extends BaseController{
 	
 	@Autowired
 	private FamilyDO familyDO;
+	
+	@Autowired
+	private SmsService smsService;
 
 	/**
 	 * 用户登录注册
 	 */
-//	@RequestMapping(value = "/login", method = RequestMethod.GET)
-//	public void login(@RequestBody Packet packet, HttpServletResponse response ,HttpServletRequest request) {
-//		logger.info("登陆开始，收到的数据是:" + packet.toString());
-//		
-//	}
-	
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public void login(@RequestBody String requestString ,HttpServletResponse response) {
 		logger.info("登陆:" + requestString.toString());
@@ -103,6 +99,13 @@ public class LoginController extends BaseController{
 			
 				
 			//登录时短信验证码一定不为空
+			Sms sms = smsService.findAppUserSmsByPhone(loginAO.getPhone());
+			if (null == sms || !sms.getMsg().equals(loginAO.getCode())) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("登录错误，验证码错误");
+				break;	
+			}
+			
 			User user = userDO.selectByPhone(loginAO.getPhone());
 			if (null == user) {
 

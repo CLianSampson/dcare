@@ -24,5 +24,5 @@ public interface TemperatureDO {
     int updateByPrimaryKey(Temperature record);
     
     
-    List<Temperature> selectByFamilyUerIdAndDate(@Param("familyUserId") int familyUserId, @Param("time") Date time);
+    List<Temperature> selectByFamilyUerIdAndDate( @Param("userId") Integer userId,@Param("familyUserId") Integer familyUserId, @Param("time") Date time);
 }
