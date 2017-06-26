@@ -5,7 +5,7 @@ import java.util.Date;
 public class DownloadTemperatureAO {
 	private Date day;
 	
-	private int familyUserId;
+	private int id;
 
 	public Date getDay() {
 		return day;
@@ -15,13 +15,15 @@ public class DownloadTemperatureAO {
 		this.day = day;
 	}
 
-	public int getFamilyUserId() {
-		return familyUserId;
+	public int getId() {
+		return id;
 	}
 
-	public void setFamilyUserId(int familyUserId) {
-		this.familyUserId = familyUserId;
+	public void setId(int id) {
+		this.id = id;
 	}
+
+	
 	
 	
 }

@@ -19,28 +19,32 @@ import com.dcare.service.TemperatureService;
 @Transactional
 public class TemperatureServiceImpl implements TemperatureService {
 	
+	
 	@Autowired
 	private TemperatureDO temperatureDO;
 	
 	public List<Temperature> geTemperaturesByFamilyUserId(int familyUserId, Date time) {
 		
-		return temperatureDO.selectByFamilyUerIdAndDate(null,familyUserId, time);
+		String timeString = DateUtil.getDateStr_YYYY_MM_DD_FORMAT(time);
+		
+    	return temperatureDO.selectByFamilyUerIdAndDate(null,familyUserId, timeString);
 	}
 
 	public void addTemperature(int userId,int familyUserId, int zone,
 			List<String> temp) {
 		
-		Date date = DateUtil.getDate_YYYY_MM_DD_FORMAT();
+		Date date = new Date();
+		int hour = date.getHours();
+		String dateString = DateUtil.getDateStr_YYYY_MM_DD_FORMAT(date);
 		
 		//1、获取当前小时
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		int hour = calendar.get(Calendar.HOUR);
+//		Calendar calendar = Calendar.getInstance();
+//		calendar.setTime(date);
+//		int hour = calendar.get(Calendar.HOUR);
 		
-		List<Temperature> list = temperatureDO.selectByFamilyUerIdAndDate(userId, familyUserId, date);
-		if (null==list || list.size()<1) {
+		List<Temperature> list = temperatureDO.selectByFamilyUerIdAndDate(userId, familyUserId, dateString);
+		if (null==list || list.size()==0) {
 			//当天没有记录
-			
 			if (hour < 12) {
 				//说明上传的数据中也有昨天的数据
 				//首先判断昨天是否已经在数据库中存在数据
@@ -49,8 +53,9 @@ public class TemperatureServiceImpl implements TemperatureService {
 				
 			}else {
 				//只有今天,将之前没有的数据 补为 空字符串 ""
-				List<String> realTemperatureList = new ArrayList<String>(24);
-				for (int i = 0; i < realTemperatureList.size(); i++) {
+				List<String> realTemperatureList = new ArrayList<String>();
+				
+				for (int i = 0; i < 24; i++) {
 					if (i < (hour - 12)) {
 						realTemperatureList.add(" ");
 					}else if(i>hour){
@@ -65,7 +70,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 				temperature.setCreateTime(new Date());
 				temperature.setFamilyUserId(familyUserId);
 				temperature.setTemperature(jsonString);
-				temperature.setTime(date);
+				temperature.setTime(dateString);
 				temperature.setUserId(userId);
 				
 				
@@ -83,7 +88,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 		Temperature temperatureInDB = list.get(0);
 		
 		String stringInDB = temperatureInDB.getTemperature();
-		List<String> listInDB = JSON.parseObject(stringInDB, new ArrayList<String>().getClass());
+		List<String> listInDB = JSON.parseArray(stringInDB, String.class);
 		
 		for (int i = 0; i < temp.size(); i++) {
 			listInDB.set(i, temp.get(hour-i));
@@ -101,9 +106,9 @@ public class TemperatureServiceImpl implements TemperatureService {
 		
 		Date yesterday = DateUtil.getYesterDate(new Date());
 		String dateStr = DateUtil.formatCurrentTime(yesterday, DateUtil.YYYY_MM_DD_FORMAT);
-        Date date = DateUtil.stringToDateFormat(dateStr, DateUtil.YYYY_MM_DD_FORMAT);
+//        Date date = DateUtil.stringToDateFormat(dateStr, DateUtil.YYYY_MM_DD_FORMAT);
 		
-		List<Temperature> list = temperatureDO.selectByFamilyUerIdAndDate(userId, familyUserId, date);
+		List<Temperature> list = temperatureDO.selectByFamilyUerIdAndDate(userId, familyUserId, dateStr);
 		
 		if (null==list || list.size()<0) {
 			
@@ -124,7 +129,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 			temperature.setCreateTime(new Date());
 			temperature.setFamilyUserId(familyUserId);
 			temperature.setTemperature(jsonString);
-			temperature.setTime(date);
+			temperature.setTime(dateStr);
 			temperature.setUserId(userId);
 			
 			
@@ -135,7 +140,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 			Temperature temperatureInDB = list.get(0);
 			
 			String stringInDB = temperatureInDB.getTemperature();
-			List<String> listInDB = JSON.parseObject(stringInDB, new ArrayList<String>().getClass());
+			List<String> listInDB = JSON.parseArray(stringInDB, String.class);
 			
 			for (int i = 0; i < 12 - i; i++) {
 				listInDB.set(24 -(12-i), temp.get(i));

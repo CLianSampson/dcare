@@ -24,6 +24,10 @@ public class FamilyServiceImpl implements FamilyService{
 		
 		List<Family> families = familyDO.selectByUserId(family.getUserId());
 		
+		if (families.size()==4) {
+			return AppErrorEnums.APP_ERROR_FAMILY_BEYOND;
+		}
+		
 		//去掉一个关系只能添加一个人的限制
 //		if (null != families && families.size()!=0) {
 //			for (Family temp : families) {

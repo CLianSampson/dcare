@@ -1,6 +1,7 @@
 package com.dcare.controller;
 
 import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -36,6 +37,7 @@ public class TemperatureController extends BaseController {
 	 * @param response
 	 * @throws UnsupportedEncodingException 
 	 */
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/temperature/upload", method = RequestMethod.POST)
 	public void uploadTemperature(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
 		logger.info("上传温度:" + requestString);
@@ -57,9 +59,13 @@ public class TemperatureController extends BaseController {
 					break;
 				}
 				
-				UploadTemperatureAO uploadTemperatureAO = null;
+//				UploadTemperatureAO uploadTemperatureAO = null;
+				List<MemberTemperature>  allTemperatures = null;
 				try {
-					uploadTemperatureAO = JSON.parseObject(packet.getData(), UploadTemperatureAO.class);
+//					uploadTemperatureAO = JSON.parseObject(packet.getData(), UploadTemperatureAO.class);
+					
+					allTemperatures = JSON.parseArray(packet.getData(), MemberTemperature.class);
+					
 				} catch (Exception e) {
 					// TODO: handle exception
 					logger.error("上传温度参数错误，收到参数格式错误",e);
@@ -74,10 +80,10 @@ public class TemperatureController extends BaseController {
 				int appUserId = TokenUtil.getUserIdByToken(token);
         	
 				
-				List<MemberTemperature>  allTemperatures = uploadTemperatureAO.getAllTemperatures();
+//				List<MemberTemperature>  allTemperatures = uploadTemperatureAO.getAllTemperatures();
 				
 				for (MemberTemperature memberTemperature : allTemperatures) {
-					int familyUserId = memberTemperature.getFamilyUserId();
+					int familyUserId = memberTemperature.getId();
 					int zone = memberTemperature.getZone();
 					List<String> temp = memberTemperature.getTemp();
 					
@@ -161,13 +167,13 @@ public class TemperatureController extends BaseController {
 					break;
 				}
 				
-				if (downloadTemperatureAO.getFamilyUserId() < 0) {
+				if (downloadTemperatureAO.getId() < 0) {
 					logger.error("获取温度参数错误，收到参数错误，familyUerId");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
 				
-				returnList = temperatureService.geTemperaturesByFamilyUserId(downloadTemperatureAO.getFamilyUserId(), downloadTemperatureAO.getDay());
+				returnList = temperatureService.geTemperaturesByFamilyUserId(downloadTemperatureAO.getId(), downloadTemperatureAO.getDay());
 				
         		break;
 			}

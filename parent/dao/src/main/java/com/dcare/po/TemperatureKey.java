@@ -1,11 +1,10 @@
 package com.dcare.po;
 
-import java.util.Date;
 
 public class TemperatureKey {
     private Integer userId;
 
-    private Date time;
+    private String time;
 
     private Integer familyUserId;
 
@@ -17,15 +16,16 @@ public class TemperatureKey {
         this.userId = userId;
     }
 
-    public Date getTime() {
-        return time;
-    }
+  
+    public String getTime() {
+		return time;
+	}
 
-    public void setTime(Date time) {
-        this.time = time;
-    }
+	public void setTime(String time) {
+		this.time = time;
+	}
 
-    public Integer getFamilyUserId() {
+	public Integer getFamilyUserId() {
         return familyUserId;
     }
 

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcare.dao.HealthDO" >
+  <resultMap id="BaseResultMap" type="com.dcare.po.Health" >
+  	<id column="globalId" property="globalId" jdbcType="INTEGER" />
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="title" property="title" jdbcType="VARCHAR" />
+    <result column="loreclass" property="loreclass" jdbcType="INTEGER" />
+    <result column="img" property="img" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="keywords" property="keywords" jdbcType="VARCHAR" />
+    <result column="message" property="message" jdbcType="VARCHAR" />
+    <result column="count" property="count" jdbcType="INTEGER" />
+    <result column="fcount" property="fcount" jdbcType="INTEGER" />
+    <result column="rcount" property="rcount" jdbcType="INTEGER" />
+    <result column="time" property="time" jdbcType="BIGINT" />
+     <result column="createTime" property="createTime" jdbcType="DATE" />
+    
+  </resultMap>
+  <sql id="Base_Column_List" >
+    globalId,title,loreclass,img,description,keywords,message,count ,
+    fcount,rcount,time,createTime
+  </sql>
+ 
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from health
+    where globalId = #{globalId}
+  </delete>
+  
+  <insert id="insertSelective" parameterType="com.dcare.po.Health" >
+    insert into health
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="globalId != null" >
+        globalId,
+      </if>
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="title != null" >
+        title,
+      </if>
+      <if test="loreclass != null" >
+        loreclass,
+      </if>
+      <if test="img != null" >
+        img,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="keywords != null" >
+        keywords,
+      </if>
+      <if test="message != null" >
+        message,
+      </if>
+      <if test="count != null" >
+        count,
+      </if>
+      <if test="fcount != null" >
+        fcount,
+      </if>
+      <if test="rcount != rcount" >
+        rcount,
+      </if>
+      <if test="time != null" >
+        time,
+      </if>
+       <if test="createTime != null" >
+        createTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="globalId != null" >
+        #{globalId},
+      </if>
+      <if test="id != null" >
+        #{id},
+      </if>
+      <if test="title != null" >
+       #{title},
+      </if>
+      <if test="loreclass != null" >
+         #{loreclass},
+      </if>
+      <if test="img != null" >
+         #{img},
+      </if>
+      <if test="description != null" >
+         #{description},
+      </if>
+      <if test="keywords != null" >
+         #{keywords},
+      </if>
+      <if test="message != null" >
+         #{message},
+      </if>
+      <if test="count != null" >
+        #{count},
+      </if>
+      <if test="fcount != null" >
+         #{fcount},
+      </if>
+      <if test="rcount != rcount" >
+         #{rcount},
+      </if>
+      <if test="time != null" >
+         #{time},
+      </if>
+       <if test="createTime != null" >
+         #{createTime},
+      </if>
+    </trim>
+  </insert>
+  
+  
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcare.po.Health" >
+    update health
+    <set >
+      <if test="id != null" >
+        id = #{id},
+      </if>
+      <if test="title != null" >
+       title = #{title},
+      </if>
+      <if test="loreclass != null" >
+        loreclass = #{loreclass},
+      </if>
+      <if test="img != null" >
+        img = #{img},
+      </if>
+      <if test="description != null" >
+         description = #{description},
+      </if>
+      <if test="keywords != null" >
+         keywords = #{keywords},
+      </if>
+      <if test="message != null" >
+         message = #{message},
+      </if>
+      <if test="count != null" >
+        count = #{count},
+      </if>
+      <if test="fcount != null" >
+         fcount = #{fcount},
+      </if>
+      <if test="rcount != rcount" >
+        rcount = #{rcount},
+      </if>
+      <if test="time != null" >
+         time = #{time},
+      </if>
+       <if test="createTime != null" >
+         createTime = #{createTime},
+      </if>
+    </set>
+    where globalId = #{globalId}
+  </update>
+  
+  
+  
+   <select id="selectById" resultType="com.dcare.po.Health" >
+    select 
+    <include refid="Base_Column_List" />
+    from health
+    where  loreclass = #{loreclass}
+    LIMIT #{pageNo},#{pageSize}  
+  </select>
+  
+</mapper>

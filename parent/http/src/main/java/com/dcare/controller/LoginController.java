@@ -131,6 +131,7 @@ public class LoginController extends BaseController{
 				Family family = new Family();
 				family.setRelation("本人");
 				family.setUserId(user.getId());
+				family.setNickname("我");
 				familyDO.insertSelective(family);
 			}else {
 				//更新token

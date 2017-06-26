@@ -45,6 +45,8 @@ public enum AppErrorEnums{
 	
 	APP_ERROR_FAMILY_CANNOT_EDIT(-20,"本人不能编辑"),
 	
+	APP_ERROR_FAMILY_BEYOND(-21,"超过人数限制"),
+	
 	/*
 	 * int ALREADY_RECEIVE = 2;//已领取奖励 
 	int SUCCESS = 1;//成功

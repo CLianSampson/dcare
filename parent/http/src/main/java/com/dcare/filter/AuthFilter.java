@@ -94,8 +94,9 @@ public class AuthFilter implements Filter {
 				//免登接口不需要经过shiro  
 				if (  uri.equals("/verifyCode/smsVerify") 
 					|| uri.equals("/verifyCode/voiceVerify") 
-					|| uri.equals("/login")
-					|| uri.equals("/getLatestVersion")){
+					|| uri.equals("/login")  
+					|| uri.equals("/getLatestVersion")
+					|| uri.equals("/healthInfo")){
 					
 					chain.doFilter(request, response);
 					return;

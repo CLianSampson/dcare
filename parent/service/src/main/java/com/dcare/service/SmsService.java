@@ -1,11 +1,15 @@
 package com.dcare.service;
 
+import java.util.List;
+
+import com.dcare.po.Health;
 import com.dcare.po.Sms;
 
 public interface SmsService {
 
-	public Sms findAppUserSmsByPhone(String phone) ;
+	Sms findAppUserSmsByPhone(String phone) ;
 
-	public void updateAppUserSms(Sms sms);
+	void updateAppUserSms(Sms sms);
+	
 	
 }

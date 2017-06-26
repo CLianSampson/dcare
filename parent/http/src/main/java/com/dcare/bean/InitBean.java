@@ -6,6 +6,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import com.dcare.dao.UserDO;
+import com.dcare.service.HealthService;
 
 
 public class InitBean implements ApplicationContextAware{
@@ -15,6 +16,9 @@ public class InitBean implements ApplicationContextAware{
 	@Autowired
 	private UserDO userDO;
 	
+	@Autowired
+	private HealthService healthService;
+	
 	public InitBean(){
 		if(null == initBean){
 			initBean = this;
@@ -22,7 +26,7 @@ public class InitBean implements ApplicationContextAware{
 	}
 	
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
-		
+//		healthService.start();
 		
 	}
 	

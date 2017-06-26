@@ -3,7 +3,7 @@
 <mapper namespace="com.dcare.dao.TemperatureDO" >
   <resultMap id="BaseResultMap" type="com.dcare.po.Temperature" >
     <id column="userId" property="userId" jdbcType="INTEGER" />
-    <id column="time" property="time" jdbcType="TIMESTAMP" />
+    <id column="time" property="time" jdbcType="VARCHAR" />
     <id column="familyUserId" property="familyUserId" jdbcType="INTEGER" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />

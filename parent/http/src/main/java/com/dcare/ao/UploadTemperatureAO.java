@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.dcare.ao;
 
 import java.util.List;
@@ -11,7 +9,7 @@ import java.util.List;
  * @author yaotaxi
  *
  */
-public class UploadTemperatureAO {
+public  class UploadTemperatureAO {
 	private List<MemberTemperature>  allTemperatures;
 	
 	public List<MemberTemperature> getAllTemperatures() {
@@ -22,19 +20,20 @@ public class UploadTemperatureAO {
 	}
 
 
-	public class MemberTemperature{
-		private int familyUserId;
+	public static class MemberTemperature{
+		private int id; //家庭用户id
 		
 		private int zone;
 		
 		private List<String> temp;  //一次性上传13个小时的温度数据，一个小时内包含60条数据
 
-		public int getFamilyUserId() {
-			return familyUserId;
+		
+		public int getId() {
+			return id;
 		}
 
-		public void setFamilyUserId(int familyUserId) {
-			this.familyUserId = familyUserId;
+		public void setId(int id) {
+			this.id = id;
 		}
 
 		public int getZone() {
@@ -52,8 +51,10 @@ public class UploadTemperatureAO {
 		public void setTemp(List<String> temp) {
 			this.temp = temp;
 		}
-		
-		
-		
 	}
+	
 }
+
+
+
+
