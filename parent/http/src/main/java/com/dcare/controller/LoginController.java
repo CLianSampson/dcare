@@ -5,6 +5,7 @@ package com.dcare.controller;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.alibaba.fastjson.JSON;
 import com.dcare.ao.LoginAO;
 import com.dcare.common.code.AppErrorEnums;
+import com.dcare.common.code.AttributeConst;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
 import com.dcare.common.util.TokenUtil;
@@ -65,6 +67,7 @@ public class LoginController extends BaseController{
 		
 		String returnToken = null;
 		int returnUserId = 0;
+		List<Family> returnFamily = null; //本人
 		while(loopFlag){
 			loopFlag = false;
 			
@@ -129,9 +132,9 @@ public class LoginController extends BaseController{
 				
 				//增加共享联系人
 				Family family = new Family();
-				family.setRelation("本人");
+				family.setRelation(AttributeConst.RELATION_MYSELF);
 				family.setUserId(user.getId());
-				family.setNickname("我");
+				family.setNickname(AttributeConst.DEFAULT_NICKNAME);
 				familyDO.insertSelective(family);
 			}else {
 				//更新token
@@ -140,6 +143,14 @@ public class LoginController extends BaseController{
 				user.setToken(token);
 				userDO.updateByPrimaryKeySelective(user);
 			}
+			
+			returnFamily = familyDO.selectByUserId(user.getId());
+//			for (Family family : families) {
+//				if (family.getRelation().equals(AttributeConst.RELATION_MYSELF)) {
+//					returnFamily = family;
+//				}
+//			}
+			
 			
 			returnToken = user.getToken();
 			returnUserId = user.getId();
@@ -151,6 +162,7 @@ public class LoginController extends BaseController{
 		
 		Map<String, Object> map = new HashMap<String, Object>();
 		map.put("userId", returnUserId);
+		map.put("family", returnFamily);
 		
 		rtvPacket.setData(JSON.toJSONString(map));
 		rtvPacket.setCode(rtv.getCode());

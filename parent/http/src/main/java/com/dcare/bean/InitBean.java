@@ -26,7 +26,7 @@ public class InitBean implements ApplicationContextAware{
 	}
 	
 	public void setApplicationContext(ApplicationContext arg0) throws BeansException {
-//		healthService.start();
+		healthService.start();
 		
 	}
 	

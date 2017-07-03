@@ -96,7 +96,8 @@ public class AuthFilter implements Filter {
 					|| uri.equals("/verifyCode/voiceVerify") 
 					|| uri.equals("/login")  
 					|| uri.equals("/getLatestVersion")
-					|| uri.equals("/healthInfo")){
+					|| uri.equals("/healthInfo")
+					|| uri.equals("/goodsList")){
 					
 					chain.doFilter(request, response);
 					return;

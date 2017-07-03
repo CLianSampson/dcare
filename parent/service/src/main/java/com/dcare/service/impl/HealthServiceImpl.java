@@ -10,9 +10,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
 
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.alibaba.fastjson.JSON;
 import com.dcare.common.code.AttributeConst;
+import com.dcare.common.util.DateUtil;
 import com.dcare.dao.HealthDO;
 import com.dcare.po.Health;
 import com.dcare.service.HealthService;
@@ -38,6 +39,7 @@ public class HealthServiceImpl implements HealthService  {
 	@Autowired
 	private HealthDO healthDO;
 	
+	private  static int timeFlag = 0;
 	
 	public void start() {
 		Thread thread = new Thread(new Runnable() {
@@ -45,7 +47,25 @@ public class HealthServiceImpl implements HealthService  {
 			public void run() {
 				try {
 					
-					getDataFromThirdServer();
+					Calendar now = Calendar.getInstance();
+					
+					int hour = now.get(Calendar.HOUR_OF_DAY);
+				    int minute = now.get(Calendar.MINUTE);
+				             
+				    String currentTimeStr = hour + ":" + minute;
+				       
+				 
+			        if (DateUtil.isInTime("1:00-23:00", currentTimeStr)) {
+				        if (timeFlag == 0) {
+				        	//丛第三方服务器拉取数据
+				        	getDataFromThirdServer();
+				         }
+				        
+				          timeFlag++;
+			        }else {
+			        	timeFlag = 0;
+			        }
+					
 					Thread.sleep(100000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
@@ -105,8 +125,23 @@ public class HealthServiceImpl implements HealthService  {
 	         
 	         System.out.println("after json :"+ responseThird);
 	         
+	         //获取已有的数据
+	         List<Health> recordInDB = healthDO.selectAll();
+	         
 	         List<com.dcare.service.impl.HealthServiceImpl.ResponseThird.HealthThird> list = responseThird.getTngou();
 	         for (com.dcare.service.impl.HealthServiceImpl.ResponseThird.HealthThird healthThird : list) {
+	        	boolean flag =  false;
+	        	for (Health health : recordInDB) {
+					if (health.getId() == healthThird.getId()) {
+						flag = true;
+						break;
+					}
+				}
+	        	
+	        	if (flag) {
+					continue;
+				}
+	        	
 				Health health = new Health();
 				health.setId(healthThird.getId());
 				health.setCount(healthThird.getCount());
@@ -135,9 +170,6 @@ public class HealthServiceImpl implements HealthService  {
 			e.printStackTrace();
 		}	
 	}
-	
-	
-	
 	
 	
 	
@@ -281,32 +313,7 @@ public class HealthServiceImpl implements HealthService  {
 		return healthDO.selectById(classify, currentPage, AttributeConst.DEFAULT_PAGE_SIZE);
 	}
 
-
-
-
-
-
-	
-	
-
-
-
-
-
-
-	
-
-
-
-
-
-
-	
-
-
-
-
-
-	
-	
 }
+
+
+

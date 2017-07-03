@@ -14,4 +14,6 @@ public interface HealthDO {
 	int updateByPrimaryKeySelective(Health record);
 	
 	List<Health> selectById(@Param("loreclass") Integer loreclass, @Param("pageNo") Integer pageNo ,@Param("pageSize") Integer pageSize);
+	
+	List<Health> selectAll();
 }

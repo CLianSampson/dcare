@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.dcare.controller;
 
 import java.io.UnsupportedEncodingException;
@@ -16,37 +13,33 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
-import com.dcare.ao.HealthInfoAO;
+import com.dcare.ao.GoodsAO;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
-import com.dcare.po.Health;
-import com.dcare.service.HealthService;
+import com.dcare.common.util.TokenUtil;
+import com.dcare.po.Goods;
+import com.dcare.service.GoodsService;
 
-/**
- * @author yaotaxi
- *
- */
 @Controller
-public class HealthController extends BaseController {
-private static Logger logger = Logger.getLogger(HealthController.class);
+public class GoodsController extends BaseController{
+	private static Logger logger = Logger.getLogger(AdviceController.class);
 	
 	
 	
 	@Autowired
-	private HealthService healthService;
+	private GoodsService goodsService;
 	
-
 	/**
-	 * 获取健康咨讯
+	 * 商品列表
 	 * @param packet
 	 * @param response
 	 * @throws UnsupportedEncodingException 
 	 */
-	@RequestMapping(value = "/healthInfo", method = RequestMethod.POST)
-	public void getHealthInfo(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
+	@RequestMapping(value = "/goodsList", method = RequestMethod.POST)
+	public void appuUserAdvice(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
 		
-		logger.info("获取健康咨讯:" + requestString.toString());
+		logger.info("商品列表:" + requestString.toString());
 		
 		requestString = new String(requestString.getBytes("ISO-8859-1"), "UTF-8");
 		
@@ -56,8 +49,7 @@ private static Logger logger = Logger.getLogger(HealthController.class);
 		
 		AppErrorEnums rtv = AppErrorEnums.APP_OK;// 默认成功
 		
-		List<Health> returnList = null;
-		
+		List<Goods> returnList = null;
 		try {
 			while (true) {
 				if (StringUtil.isNullOrBlank(packet.getData())) {
@@ -66,26 +58,26 @@ private static Logger logger = Logger.getLogger(HealthController.class);
 					break;
 				}
 				
-				HealthInfoAO healthInfoAO = JSON.parseObject(packet.getData(), HealthInfoAO.class);
+				GoodsAO goodsAO = JSON.parseObject(packet.getData(), GoodsAO.class);
 				
+				//在shirofilter中已经校验过，此处不用校验
+				String token = packet.getToken();
+				int appUserId = TokenUtil.getUserIdByToken(token);
 				
-				
-				int classify = healthInfoAO.getClassify();
-				int pageNo = healthInfoAO.getPageNo();
-				if (classify<0 || pageNo<1) {
-					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					logger.error("参数错误");
+			   int pageNo = goodsAO.getPageNo();
+			   if (pageNo < 0) {
+				   rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					logger.error("参数错误，pageNo");
 					break;
-				}
-				
-				returnList = healthService.getHealthInfo(classify, pageNo);
-        		
+			   }
+			   
+        		returnList = goodsService.getGoods(pageNo);
         		
         		break;
 			}
 
 		} catch (Exception e) {
-			logger.error("获取健康咨讯:失败", e);
+			logger.error("商品列表失败", e);
 			rtv = AppErrorEnums.APP_ERROR;
 		}
 		
@@ -97,11 +89,11 @@ private static Logger logger = Logger.getLogger(HealthController.class);
 		}else {
 			rtvPacket.setData(rtv.getMessage());
 		}
-		
 	
 		
-		logger.info("获取健康咨讯结束 ，返回的信息是  ： " + rtvPacket);
+		logger.info("商品列表结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
+
 }

@@ -1,7 +1,6 @@
 package com.dcare.controller;
 
 import java.io.UnsupportedEncodingException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.dcare.ao.DownloadTemperatureAO;
-import com.dcare.ao.UploadTemperatureAO;
 import com.dcare.ao.UploadTemperatureAO.MemberTemperature;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;

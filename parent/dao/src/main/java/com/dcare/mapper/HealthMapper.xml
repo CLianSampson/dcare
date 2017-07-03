@@ -18,7 +18,7 @@
     
   </resultMap>
   <sql id="Base_Column_List" >
-    globalId,title,loreclass,img,description,keywords,message,count ,
+    globalId,id,title,loreclass,img,description,keywords,message,count ,
     fcount,rcount,time,createTime
   </sql>
  
@@ -165,6 +165,13 @@
     from health
     where  loreclass = #{loreclass}
     LIMIT #{pageNo},#{pageSize}  
+  </select>
+  
+  
+   <select id="selectAll" resultType="com.dcare.po.Health" >
+    select 
+    <include refid="Base_Column_List" />
+    from health
   </select>
   
 </mapper>
