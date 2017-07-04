@@ -59,11 +59,7 @@ public class GoodsController extends BaseController{
 				}
 				
 				GoodsAO goodsAO = JSON.parseObject(packet.getData(), GoodsAO.class);
-				
-				//在shirofilter中已经校验过，此处不用校验
-				String token = packet.getToken();
-				int appUserId = TokenUtil.getUserIdByToken(token);
-				
+					
 			   int pageNo = goodsAO.getPageNo();
 			   if (pageNo < 0) {
 				   rtv = AppErrorEnums.APP_ARGS_ERRORS;
