@@ -25,7 +25,7 @@ import com.dcare.service.BloodPressureService;
 
 @Controller
 public class BloodPressureController extends BaseController {
-private static Logger logger = Logger.getLogger(FamilyController.class);
+	private static Logger logger = Logger.getLogger(FamilyController.class);
 	
 	@Autowired
 	private BloodPressureService bloodPressureService;
@@ -154,13 +154,13 @@ private static Logger logger = Logger.getLogger(FamilyController.class);
 					break;
 				}
 				
-				if (bloodListAO.getPageNo()<0) {
-					logger.error("获取血压参数错误，收到参数错误，pageNo");
-					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					break;
+				if (bloodListAO.getType() ==1) {
+					returnList = bloodPressureService.getBloodPresureByFamilyUserId(bloodListAO.getId(), bloodListAO.getPageNo());
+				}else {
+					returnList = bloodPressureService.getBloodPressuresBetweenTime(bloodListAO.getId(), bloodListAO.getStartTime(), bloodListAO.getEndTime());
 				}
 				
-				returnList = bloodPressureService.getBloodPresureByFamilyUserId(bloodListAO.getId(), bloodListAO.getPageNo());
+				
 				
 				
         		break;

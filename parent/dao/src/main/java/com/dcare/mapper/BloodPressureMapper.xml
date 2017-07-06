@@ -120,10 +120,23 @@
    <select id="selectByFamilyUserId" resultMap="BaseResultMap"  >
     select 
     <include refid="Base_Column_List" />
-   from bloodpressure
-   WHERE familyUserId = #{familyUserId} 
-   LIMIT #{pageNo},#{pageSize} 
+    from bloodpressure
+	WHERE familyUserId = #{familyUserId} 
+	ORDER BY id DESC
+	LIMIT #{pageNo},#{pageSize} 
   </select>
   
   
+  <select id="selectBloodPressuresBetweenTime" resultMap="BaseResultMap"  >
+    select 
+    <include refid="Base_Column_List" />
+   from bloodpressure
+   WHERE familyUserId = #{familyUserId} 
+   AND createTime $gt; #{startTime} and createTime $lt; #{endTime}
+   ORDER BY id DESC
+  </select>
+  
 </mapper>
+
+
+

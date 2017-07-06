@@ -1,5 +1,6 @@
 package com.dcare.service.impl;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -50,6 +51,13 @@ public class BloodPressureServiceImpl implements BloodPressureService {
 		int pageSize = currentPageNo + AttributeConst.DEFAULT_PAGE_SIZE;
 		
 		return bloodPressureDO.selectByFamilyUserId(familyUserId, currentPageNo, pageSize);
+	}
+
+	
+	public List<BloodPressure> getBloodPressuresBetweenTime(int familyUserId,
+			Date startTime, Date endTime) {
+		
+		return bloodPressureDO.selectBloodPressuresBetweenTime(familyUserId, startTime, endTime);
 	}
 
 	

@@ -1,5 +1,6 @@
 package com.dcare.dao;
 
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
@@ -20,4 +21,6 @@ public interface BloodPressureDO {
     int updateByPrimaryKey(BloodPressure record);
     
     List<BloodPressure> selectByFamilyUserId(@Param("familyUserId") int familyUserId, @Param("pageNo") int pageNo,@Param("pageSize") int pageSize);
+    
+    List<BloodPressure> selectBloodPressuresBetweenTime(@Param("familyUserId") int familyUserId,@Param("startTime") Date startTime,@Param("endTime") Date endTime);
 }
