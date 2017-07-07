@@ -132,7 +132,7 @@
     <include refid="Base_Column_List" />
    from bloodpressure
    WHERE familyUserId = #{familyUserId} 
-   AND createTime $gt; #{startTime} and createTime $lt; #{endTime}
+   AND createTime &gt; #{startTime} and createTime &lt; #{endTime}
    ORDER BY id DESC
   </select>
   

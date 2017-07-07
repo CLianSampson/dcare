@@ -91,7 +91,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 		List<String> listInDB = JSON.parseArray(stringInDB, String.class);
 		
 		for (int i = 0; i < temp.size(); i++) {
-			listInDB.set(i, temp.get(hour-i));
+			listInDB.set(i, temp.get(hour-i-1));
 		}
 		
 		//重新设置温度值
@@ -118,7 +118,7 @@ public class TemperatureServiceImpl implements TemperatureService {
 				if (i < (24 -(12-i)) ) {
 					realTemperatureList.add(" ");
 				}else {
-					realTemperatureList.add(temp.get(24 -(12-i)));
+					realTemperatureList.add(temp.get(24 -(12-i)));  
 				}
 				
 				
