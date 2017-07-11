@@ -1,7 +1,6 @@
 package com.dcare.service.impl;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 
@@ -90,8 +89,20 @@ public class TemperatureServiceImpl implements TemperatureService {
 		String stringInDB = temperatureInDB.getTemperature();
 		List<String> listInDB = JSON.parseArray(stringInDB, String.class);
 		
-		for (int i = 0; i < temp.size(); i++) {
-			listInDB.set(i, temp.get(hour-i-1));
+//		for (int i = 0; i < temp.size(); i++) {
+//			if (i > hour-13) {
+//				listInDB.set(i, temp.get(hour-i-1-1));
+//			}
+//		}
+		
+		for (int i = 0; i < listInDB.size(); i++) {
+			if (i > hour-13) {
+				int index = i - (hour-13) -1;
+				if (index > 12) {
+					break;
+				}
+				listInDB.set(i, temp.get(index) );
+			}
 		}
 		
 		//重新设置温度值
@@ -110,18 +121,19 @@ public class TemperatureServiceImpl implements TemperatureService {
 		
 		List<Temperature> list = temperatureDO.selectByFamilyUerIdAndDate(userId, familyUserId, dateStr);
 		
-		if (null==list || list.size()<0) {
+		if (null==list || list.size()==0) {
 			
-			List<String> realTemperatureList = new ArrayList<String>(24);
+//			List<String> realTemperatureList = new ArrayList<String>(24); //这种初始化方法不行，size()为0
+			List<String> realTemperatureList = new ArrayList<String>();
+			for (int i = 0; i < 24; i++) {
+				realTemperatureList.add(" ");
+			}
+			
 			for (int i = 0; i < realTemperatureList.size(); i++) {
 				
-				if (i < (24 -(12-i)) ) {
-					realTemperatureList.add(" ");
-				}else {
-					realTemperatureList.add(temp.get(24 -(12-i)));  
-				}
-				
-				
+				if (i >= (24 -(12-i)) ) {
+					realTemperatureList.set(i, temp.get(24 -(12-i)));
+				}	
 			}
 			
 			String jsonString = JSON.toJSONString(realTemperatureList);
@@ -153,6 +165,11 @@ public class TemperatureServiceImpl implements TemperatureService {
 			
 		}
 		
+	}
+	
+	public static void main(String[] args){
+		List<String> realTemperatureList = new ArrayList<String>(24);
+		System.out.println("realTemperatureList.size is : " + realTemperatureList.size());
 	}
 	
 	
