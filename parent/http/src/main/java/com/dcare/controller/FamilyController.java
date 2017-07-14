@@ -52,14 +52,14 @@ public class FamilyController extends BaseController {
 	private FamilyService familyService;
 	
 	/**
-	 * 新增乘车人
+	 * 新增家庭用户
 	 * @param packet
 	 * @param response
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/family/add", method = RequestMethod.POST)
 	public void addPassenger(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
-		logger.info("新增乘车人:" + requestString.toString());
+		logger.info("新增家庭用户:" + requestString.toString());
 		
 		requestString = new String(requestString.getBytes("ISO-8859-1"), "UTF-8");
 		
@@ -74,7 +74,7 @@ public class FamilyController extends BaseController {
 			while (true) {
 				if (StringUtil.isNullOrBlank(packet.getData())) {
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					logger.error("新增乘车人参数错误，收到参数为空");
+					logger.error("新增家庭用户参数错误，收到参数为空");
 					break;
 				}
 				
@@ -83,13 +83,13 @@ public class FamilyController extends BaseController {
 					addFamilyAO = JSON.parseObject(packet.getData(), AddFamilyAO.class);
 				} catch (Exception e) {
 					// TODO: handle exception
-					logger.error("新增乘车人参数错误，收到参数格式错误",e);
+					logger.error("新增家庭用户参数错误，收到参数格式错误",e);
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
 				
 				if (null == addFamilyAO.getRelation()) {
-					logger.error("新增乘车人参数错误，收到参数错误，关系不能为空");
+					logger.error("新增家庭用户参数错误，收到参数错误，关系不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
@@ -117,7 +117,7 @@ public class FamilyController extends BaseController {
 			}
 
 		} catch (Exception e) {
-			logger.error("新增乘车人", e);
+			logger.error("新增家庭用户", e);
 			rtv = AppErrorEnums.APP_ERROR;
 		}
 		
@@ -128,20 +128,20 @@ public class FamilyController extends BaseController {
 		rtvPacket.setData(rtv.getMessage());
 	
 		
-		logger.info("新增乘车人结束 ，返回的信息是  ： " + rtvPacket);
+		logger.info("新增家庭用户结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
 	
 	
 	/**
-	 * 获取乘车人
+	 * 获取家庭用户
 	 * @param packet
 	 * @param response
 	 */
 	@RequestMapping(value = "/family/query", method = RequestMethod.POST)
 	public void getPassenger(@RequestBody String requestString, HttpServletResponse response) {
-		logger.info("获取乘车人:" + requestString.toString());
+		logger.info("获取家庭用户:" + requestString.toString());
 		
 		Packet packet = JSON.parseObject(requestString, Packet.class);
 		
@@ -161,7 +161,7 @@ public class FamilyController extends BaseController {
 			}
 
 		} catch (Exception e) {
-			logger.error("获取乘车人失败", e);
+			logger.error("获取家庭用户失败", e);
 			rtv = AppErrorEnums.APP_ERROR;
 		}
 		
@@ -175,20 +175,20 @@ public class FamilyController extends BaseController {
 			rtvPacket.setData(rtv.getMessage());
 		}
 		
-		logger.info("获取乘车人结束 ，返回的信息是  ： " + rtvPacket);
+		logger.info("获取家庭用户结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
 	
 	
 	/**
-	 * 删除乘车人
+	 * 删除家庭用户
 	 * @param packet
 	 * @param response
 	 */
 	@RequestMapping(value = "/family/delete", method = RequestMethod.POST)
 	public void deletePassenger(@RequestBody String requestString, HttpServletResponse response) {
-		logger.info("删除乘车人:" + requestString.toString());
+		logger.info("删除家庭用户:" + requestString.toString());
 		
 		Packet packet = JSON.parseObject(requestString, Packet.class);
 		
@@ -200,7 +200,7 @@ public class FamilyController extends BaseController {
 			while (true) {
 				if (StringUtil.isNullOrBlank(packet.getData())) {
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					logger.error("删除乘车人参数错误，收到参数为空");
+					logger.error("删除家庭用户参数错误，收到参数为空");
 					break;
 				}
 				
@@ -209,7 +209,7 @@ public class FamilyController extends BaseController {
 					deleteFamilyMemberAO = JSON.parseObject(packet.getData(), DeleteFamilyMemberAO.class);
 				} catch (Exception e) {
 					// TODO: handle exception
-					logger.error("删除家庭成员参数错误，收到参数格式错误",e);
+					logger.error("删除家庭用户参数错误，收到参数格式错误",e);
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
@@ -227,7 +227,7 @@ public class FamilyController extends BaseController {
 			}
 
 		} catch (Exception e) {
-			logger.error("删除乘车人失败", e);
+			logger.error("删除家庭用户失败", e);
 			rtv = AppErrorEnums.APP_ERROR;
 		}
 		
@@ -237,20 +237,20 @@ public class FamilyController extends BaseController {
 		rtvPacket.setData(rtv.getMessage());
 	
 		
-		logger.info("删除乘车人结束 ，返回的信息是  ： " + rtvPacket);
+		logger.info("删除家庭用户结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
 	
 	/**
-	 * 编辑乘车人
+	 * 编辑家庭用户
 	 * @param packet
 	 * @param response
 	 * @throws UnsupportedEncodingException 
 	 */
 	@RequestMapping(value = "/family/edit", method = RequestMethod.POST)
 	public void editPassenger(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
-		logger.info("编辑乘车人:" + requestString.toString());
+		logger.info("编辑家庭用户:" + requestString.toString());
 		
 		requestString = new String(requestString.getBytes("ISO-8859-1"), "UTF-8");
 		
@@ -266,7 +266,7 @@ public class FamilyController extends BaseController {
 			while (true) {
 				if (StringUtil.isNullOrBlank(packet.getData())) {
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					logger.error("编辑乘车人参数错误，收到参数为空");
+					logger.error("编辑家庭用户参数错误，收到参数为空");
 					break;
 				}
 				
@@ -275,13 +275,13 @@ public class FamilyController extends BaseController {
 					editFamilyMemberAO = JSON.parseObject(packet.getData(), EditFamilyMemberAO.class);
 				} catch (Exception e) {
 					// TODO: handle exception
-					logger.error("编辑乘车人参数错误，收到参数格式错误",e);
+					logger.error("编辑家庭用户参数错误，收到参数格式错误",e);
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
 				
 				if (editFamilyMemberAO.getId()<1) {
-					logger.error("编辑乘车人参数错误");
+					logger.error("编辑家庭用户参数错误");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
@@ -307,7 +307,7 @@ public class FamilyController extends BaseController {
 			}
 
 		} catch (Exception e) {
-			logger.error("编辑乘车人失败", e);
+			logger.error("编辑家庭用户失败", e);
 			rtv = AppErrorEnums.APP_ERROR;
 		}
 		
@@ -317,7 +317,7 @@ public class FamilyController extends BaseController {
 		rtvPacket.setData(rtv.getMessage());
 	
 		
-		logger.info("编辑乘车人结束 ，返回的信息是  ： " + rtvPacket);
+		logger.info("编辑家庭用户结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}

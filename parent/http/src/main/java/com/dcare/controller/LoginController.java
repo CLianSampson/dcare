@@ -100,14 +100,22 @@ public class LoginController extends BaseController{
 				break;	
 			}
 			
-				
-			//登录时短信验证码一定不为空
-			Sms sms = smsService.findAppUserSmsByPhone(loginAO.getPhone());
-			if (null == sms || !sms.getMsg().equals(loginAO.getCode())) {
-				rtv = AppErrorEnums.APP_CODE_WRONG;
-				logger.error("登录错误，验证码错误");
-				break;	
+			
+			
+			
+			if (loginAO.getPhone().equals("17888888888") && loginAO.getCode().equals("8888")) {
+				//ios审核账号
+			}else {
+				//登录时短信验证码一定不为空
+				Sms sms = smsService.findAppUserSmsByPhone(loginAO.getPhone());
+				if (null == sms || !sms.getMsg().equals(loginAO.getCode())) {
+					rtv = AppErrorEnums.APP_CODE_WRONG;
+					logger.error("登录错误，验证码错误");
+					break;	
+				}
 			}
+				
+			
 			
 			User user = userDO.selectByPhone(loginAO.getPhone());
 			if (null == user) {

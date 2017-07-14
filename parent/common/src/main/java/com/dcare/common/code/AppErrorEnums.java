@@ -47,6 +47,9 @@ public enum AppErrorEnums{
 	
 	APP_ERROR_FAMILY_BEYOND(-21,"超过人数限制"),
 	
+	APP_ERROR_SHARE_USER_BEYOND(-22,"共享用户超过人数限制"),
+	
+	APP_ERROR_SHARE_USER_NOT_EXIST(-23,"共享用户不存在"),
 	/*
 	 * int ALREADY_RECEIVE = 2;//已领取奖励 
 	int SUCCESS = 1;//成功
