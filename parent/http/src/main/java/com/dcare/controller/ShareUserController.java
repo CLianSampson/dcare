@@ -20,6 +20,7 @@ import com.alibaba.fastjson.JSON;
 import com.dcare.ao.AddShareUserAO;
 import com.dcare.ao.DeleteFamilyMemberAO;
 import com.dcare.ao.EditshareUserAO;
+import com.dcare.ao.ShareUserSendSmsAO;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
@@ -196,6 +197,12 @@ public class ShareUserController extends BaseController {
 					break;
 				}
 				
+				if (deleteFamilyMemberAO.getId() < 1) {
+					logger.error("删除共享用户参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
 				String token = packet.getToken();
 				int appUserId = TokenUtil.getUserIdByToken(token);
 				
@@ -328,27 +335,27 @@ public class ShareUserController extends BaseController {
 					break;
 				}
 				
-//				EditshareUserAO  editshareUserAO = null;
-//				try {
-//					editshareUserAO = JSON.parseObject(packet.getData(), EditshareUserAO.class);
-//				} catch (Exception e) {
-//					// TODO: handle exception
-//					logger.error("给共享用户发送短信参数错误，收到参数格式错误",e);
-//					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-//					break;
-//				}
-//				
-//				if (editshareUserAO.getId()<1) {
-//					logger.error("给共享用户发送短信参数错误");
-//					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-//					break;
-//				}
+				ShareUserSendSmsAO  shareUserSendSmsAO = null;
+				try {
+					shareUserSendSmsAO = JSON.parseObject(packet.getData(), ShareUserSendSmsAO.class);
+				} catch (Exception e) {
+					// TODO: handle exception
+					logger.error("给共享用户发送短信参数错误，收到参数格式错误",e);
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (StringUtil.isNullOrBlank(shareUserSendSmsAO.getPhone())) {
+					logger.error("给共享用户发送短信参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
 				
 				//在shirofilter中已经校验过，此处不用校验
 				String token = packet.getToken();
 				int appUserId = TokenUtil.getUserIdByToken(token);
 			
-				rtv = shareUserService.sendSms(appUserId);
+				rtv = shareUserService.sendSms(appUserId,shareUserSendSmsAO.getPhone(),shareUserSendSmsAO.getTemp());
 				
         		break;
 			}

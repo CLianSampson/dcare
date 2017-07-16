@@ -20,7 +20,7 @@ public class FamilyServiceImpl implements FamilyService{
 	@Autowired
 	private FamilyDO  familyDO;
 	
-	public AppErrorEnums addFamilyMember(Family family) {
+	public Object addFamilyMember(Family family) {
 		
 		List<Family> families = familyDO.selectByUserId(family.getUserId());
 		
@@ -39,8 +39,9 @@ public class FamilyServiceImpl implements FamilyService{
 		
 		
 		familyDO.insertSelective(family);
+		System.out.println("family is :" + family.toString());
 		
-		return AppErrorEnums.APP_OK;
+		return family;
 	}
 
 	public AppErrorEnums deleteFamilyMember(Family record) {
@@ -72,7 +73,9 @@ public class FamilyServiceImpl implements FamilyService{
 		
 		//本人不能编辑关系
 		if (family.getRelation().equals("本人") && !record.getRelation().equals("本人")) {
-			return AppErrorEnums.APP_ERROR_FAMILY_CANNOT_EDIT;
+//			return AppErrorEnums.APP_ERROR_FAMILY_CANNOT_EDIT;
+			
+			record.setRelation("本人");
 		}
 		
 		familyDO.updateByPrimaryKeySelective(record);
@@ -85,9 +88,12 @@ public class FamilyServiceImpl implements FamilyService{
 		
 		return  familyDO.selectByUserId(userId);
 	}
-	
-	
-	
-	
-	
+
 }
+
+
+
+
+
+
+

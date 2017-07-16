@@ -3,6 +3,7 @@
  */
 package com.dcare.service.impl;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -39,12 +40,25 @@ public class ShareUserServiceImpl implements ShareUserService {
 			return AppErrorEnums.APP_ERROR_SHARE_USER_BEYOND;
 		}
 		
+		shareUserDO.insert(shareUser);
 		
 		return AppErrorEnums.APP_OK;
 	}
 
 	
 	public AppErrorEnums deleteShareUser(ShareUser shareUser) {
+		List<ShareUser> recordInDbList = shareUserDO.selectAllShareUser(shareUser.getUserId());
+		
+		boolean flag = false;
+		for (ShareUser temp : recordInDbList) {
+			if (temp.getId().equals(shareUser.getId())) {
+				flag = true;
+			}
+		}
+		
+		if (!flag) {
+			return AppErrorEnums.APP_ERROR_SHARE_USER_NOT_EXIST;
+		}
 		
 		shareUserDO.deleteByPrimaryKey(shareUser.getId());
 		
@@ -67,6 +81,7 @@ public class ShareUserServiceImpl implements ShareUserService {
 			return AppErrorEnums.APP_ERROR_SHARE_USER_NOT_EXIST;
 		}
 		
+		shareUser.setUpdateTime(new Date());
 		shareUserDO.updateByPrimaryKeySelective(shareUser);
 		
 		return AppErrorEnums.APP_OK;
@@ -80,16 +95,16 @@ public class ShareUserServiceImpl implements ShareUserService {
 
 
 	
-	public AppErrorEnums sendSms(int userId) {
+	public AppErrorEnums sendSms(int userId,String phone,float temperature) {
 		List<ShareUser> recordInDbList = shareUserDO.selectAllShareUser(userId);
 		
 		for (ShareUser temp : recordInDbList) {
-			String code = StringUtil.randomVerCode(4);// 生成随机数
+			String  temperaturesStr = "" + temperature; 
 			
-			String phone = temp.getPhone();
+			String lastFourWord = phone.substring(7, 11);
 			
 			//发送验证码
-			Map<String, Object> map = SMSUtil.sendSMS(phone, new String[] { code, SMSUtil.CLOOPEN_VALID_TIME }, SMSUtil.TEMPLATE_CODE);
+			Map<String, Object> map = SMSUtil.sendSMS(temp.getPhone(), new String[] { lastFourWord, temperaturesStr }, SMSUtil.TEMPLATE_SHARE_USER);
 			if (!"000000".equals(map.get("statusCode"))) { // 正常返回输出data包体信息（map）
 				// 异常返回输出错误码和错误信息
 				logger.error("错误码=" + map.get("statusCode") + " 错误信息= " + map.get("statusMsg"));
@@ -103,3 +118,9 @@ public class ShareUserServiceImpl implements ShareUserService {
 	}
 	
 }
+
+
+
+
+
+

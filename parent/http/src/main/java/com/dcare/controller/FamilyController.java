@@ -12,7 +12,9 @@ package com.dcare.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
 
@@ -69,7 +71,7 @@ public class FamilyController extends BaseController {
 		
 		logger.info("packet is :" + packet);
 		AppErrorEnums rtv = AppErrorEnums.APP_OK;// 默认成功
-		
+		int familyId = 0;
 		try {
 			while (true) {
 				if (StringUtil.isNullOrBlank(packet.getData())) {
@@ -110,7 +112,13 @@ public class FamilyController extends BaseController {
 				family.setUserId(appUserId);
 			
 			  
-				rtv = familyService.addFamilyMember(family);
+				Object object = familyService.addFamilyMember(family);
+				if (object instanceof AppErrorEnums) {
+					rtv = (AppErrorEnums) object;
+				}else {
+					Family returnFamily = (Family) object;
+					familyId = returnFamily.getId();
+				}
 				
 				
         		break;
@@ -125,7 +133,15 @@ public class FamilyController extends BaseController {
 		rtvPacket.setToken(packet.getToken());
 		
 		rtvPacket.setCode(rtv.getCode());
-		rtvPacket.setData(rtv.getMessage());
+		if (rtv != AppErrorEnums.APP_OK) {
+			rtvPacket.setData(rtv.getMessage());
+		}else {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("familyId", familyId);
+			
+			rtvPacket.setData(JSON.toJSONString(map));
+		}
+		
 	
 		
 		logger.info("新增家庭用户结束 ，返回的信息是  ： " + rtvPacket);

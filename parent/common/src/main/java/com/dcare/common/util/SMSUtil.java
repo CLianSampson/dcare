@@ -38,7 +38,7 @@ public class SMSUtil {
     
     public final static String TICKET_BOOKING_SUCCESS_SMS_TEMPLATE ="【西湖中南行】您成功预订 %s 发车的车票 %s 张，出示验票码 %s 或订单二维码验票乘车.";
     
-    
+    public final static String TEMPLATE_SHARE_USER = "191306";//共享用户
 
     // 验证码有效时间 单位：分钟
     public final static String CLOOPEN_VALID_TIME = "10";
