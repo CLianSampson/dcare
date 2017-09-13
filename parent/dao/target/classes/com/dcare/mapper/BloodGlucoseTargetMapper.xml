@@ -1,0 +1,188 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcare.dao.BloodGlucoseTargetDO" >
+  <resultMap id="BaseResultMap" type="com.dcare.po.BloodGlucoseTarget" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="userId" property="userId" jdbcType="INTEGER" />
+    <result column="limosisMin" property="limosisMin" jdbcType="INTEGER" />
+    <result column="limosisMax" property="limosisMax" jdbcType="INTEGER" />
+    <result column="beforeMealMin" property="beforeMealMin" jdbcType="INTEGER" />
+    <result column="beforeMealMax" property="beforeMealMax" jdbcType="INTEGER" />
+    <result column="afterMealMin" property="afterMealMin" jdbcType="INTEGER" />
+    <result column="afterMealMax" property="afterMealMax" jdbcType="INTEGER" />
+    <result column="beforeSleepMin" property="beforeSleepMin" jdbcType="INTEGER" />
+    <result column="beforeSleepMax" property="beforeSleepMax" jdbcType="INTEGER" />
+    <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, userId, limosisMin, limosisMax, beforeMealMin, beforeMealMax, afterMealMin, afterMealMax, 
+    beforeSleepMin, beforeSleepMax, createTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bloodglucosetarget
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bloodglucosetarget
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dcare.po.BloodGlucoseTarget" >
+    insert into bloodglucosetarget (id, userId, limosisMin, 
+      limosisMax, beforeMealMin, beforeMealMax, 
+      afterMealMin, afterMealMax, beforeSleepMin, 
+      beforeSleepMax, createTime, updateTime
+      )
+    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{limosisMin,jdbcType=INTEGER}, 
+      #{limosisMax,jdbcType=INTEGER}, #{beforeMealMin,jdbcType=INTEGER}, #{beforeMealMax,jdbcType=INTEGER}, 
+      #{afterMealMin,jdbcType=INTEGER}, #{afterMealMax,jdbcType=INTEGER}, #{beforeSleepMin,jdbcType=INTEGER}, 
+      #{beforeSleepMax,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcare.po.BloodGlucoseTarget" >
+    insert into bloodglucosetarget
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="userId != null" >
+        userId,
+      </if>
+      <if test="limosisMin != null" >
+        limosisMin,
+      </if>
+      <if test="limosisMax != null" >
+        limosisMax,
+      </if>
+      <if test="beforeMealMin != null" >
+        beforeMealMin,
+      </if>
+      <if test="beforeMealMax != null" >
+        beforeMealMax,
+      </if>
+      <if test="afterMealMin != null" >
+        afterMealMin,
+      </if>
+      <if test="afterMealMax != null" >
+        afterMealMax,
+      </if>
+      <if test="beforeSleepMin != null" >
+        beforeSleepMin,
+      </if>
+      <if test="beforeSleepMax != null" >
+        beforeSleepMax,
+      </if>
+      <if test="createTime != null" >
+        createTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null" >
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="limosisMin != null" >
+        #{limosisMin,jdbcType=INTEGER},
+      </if>
+      <if test="limosisMax != null" >
+        #{limosisMax,jdbcType=INTEGER},
+      </if>
+      <if test="beforeMealMin != null" >
+        #{beforeMealMin,jdbcType=INTEGER},
+      </if>
+      <if test="beforeMealMax != null" >
+        #{beforeMealMax,jdbcType=INTEGER},
+      </if>
+      <if test="afterMealMin != null" >
+        #{afterMealMin,jdbcType=INTEGER},
+      </if>
+      <if test="afterMealMax != null" >
+        #{afterMealMax,jdbcType=INTEGER},
+      </if>
+      <if test="beforeSleepMin != null" >
+        #{beforeSleepMin,jdbcType=INTEGER},
+      </if>
+      <if test="beforeSleepMax != null" >
+        #{beforeSleepMax,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcare.po.BloodGlucoseTarget" >
+    update bloodglucosetarget
+    <set >
+      <if test="userId != null" >
+        userId = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="limosisMin != null" >
+        limosisMin = #{limosisMin,jdbcType=INTEGER},
+      </if>
+      <if test="limosisMax != null" >
+        limosisMax = #{limosisMax,jdbcType=INTEGER},
+      </if>
+      <if test="beforeMealMin != null" >
+        beforeMealMin = #{beforeMealMin,jdbcType=INTEGER},
+      </if>
+      <if test="beforeMealMax != null" >
+        beforeMealMax = #{beforeMealMax,jdbcType=INTEGER},
+      </if>
+      <if test="afterMealMin != null" >
+        afterMealMin = #{afterMealMin,jdbcType=INTEGER},
+      </if>
+      <if test="afterMealMax != null" >
+        afterMealMax = #{afterMealMax,jdbcType=INTEGER},
+      </if>
+      <if test="beforeSleepMin != null" >
+        beforeSleepMin = #{beforeSleepMin,jdbcType=INTEGER},
+      </if>
+      <if test="beforeSleepMax != null" >
+        beforeSleepMax = #{beforeSleepMax,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        createTime = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcare.po.BloodGlucoseTarget" >
+    update bloodglucosetarget
+    set userId = #{userId,jdbcType=INTEGER},
+      limosisMin = #{limosisMin,jdbcType=INTEGER},
+      limosisMax = #{limosisMax,jdbcType=INTEGER},
+      beforeMealMin = #{beforeMealMin,jdbcType=INTEGER},
+      beforeMealMax = #{beforeMealMax,jdbcType=INTEGER},
+      afterMealMin = #{afterMealMin,jdbcType=INTEGER},
+      afterMealMax = #{afterMealMax,jdbcType=INTEGER},
+      beforeSleepMin = #{beforeSleepMin,jdbcType=INTEGER},
+      beforeSleepMax = #{beforeSleepMax,jdbcType=INTEGER},
+      createTime = #{createTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+   <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bloodglucosetarget
+    where userId = #{userId}
+  </select>
+  
+</mapper>
+
+
+

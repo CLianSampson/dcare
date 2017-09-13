@@ -118,5 +118,22 @@ public class AdviceController  extends BaseController{
 		
 		returnJson(response, rtvPacket);
 	}
+	
+	
+	/**
+	 * 用户意见反馈
+	 * @param packet
+	 * @param response
+	 * @throws UnsupportedEncodingException 
+	 */
+	@RequestMapping(value = "/iostest", method = RequestMethod.POST)
+	public void iostest(@RequestBody String requestString, HttpServletResponse response) throws UnsupportedEncodingException {
+		
+		logger.info("ios test:" + requestString.toString());
+		
+		requestString = new String(requestString.getBytes("ISO-8859-1"), "UTF-8");
+		
+		logger.info("转码之后的字符串是: " + requestString);
+	}
 }
 

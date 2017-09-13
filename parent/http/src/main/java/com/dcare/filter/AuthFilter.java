@@ -22,8 +22,6 @@ import com.dcare.common.message.Packet;
 import com.dcare.common.util.DateUtil;
 import com.dcare.common.util.PrintWriterUtil;
 import com.dcare.common.util.StringUtil;
-import com.dcare.common.util.TokenUtil;
-import com.dcare.controller.LoginController;
 import com.dcare.dao.UserDO;
 import com.dcare.po.User;
 
@@ -97,7 +95,9 @@ public class AuthFilter implements Filter {
 					|| uri.equals("/login")  
 					|| uri.equals("/getLatestVersion")
 					|| uri.equals("/healthInfo")
-					|| uri.equals("/goodsList")){
+					|| uri.equals("/goodsList")
+					|| uri.equals("/iostest")
+					|| uri.equals("/upload")){
 					
 					chain.doFilter(request, response);
 					return;

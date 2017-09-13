@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.dcare.dao.BloodGlucoseDO" >
+  <resultMap id="BaseResultMap" type="com.dcare.po.BloodGlucose" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="familyUserId" property="familyUserId" jdbcType="INTEGER" />
+    <result column="glucose" property="glucose" jdbcType="INTEGER" />
+    <result column="meal" property="meal" jdbcType="INTEGER" />
+    <result column="medicine" property="medicine" jdbcType="INTEGER" />
+    <result column="backup" property="backup" jdbcType="VARCHAR" />
+    <result column="creatTime" property="creatTime" jdbcType="TIMESTAMP" />
+    <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, familyUserId, glucose, meal, medicine, backup, creatTime, updateTime
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from bloodglucose
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from bloodglucose
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.dcare.po.BloodGlucose" >
+    insert into bloodglucose (id, familyUserId, glucose, 
+      meal, medicine, backup, 
+      creatTime, updateTime)
+    values (#{id,jdbcType=INTEGER}, #{familyUserId,jdbcType=INTEGER}, #{glucose,jdbcType=INTEGER}, 
+      #{meal,jdbcType=INTEGER}, #{medicine,jdbcType=INTEGER}, #{backup,jdbcType=VARCHAR}, 
+      #{creatTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+  </insert>
+  <insert id="insertSelective" parameterType="com.dcare.po.BloodGlucose" >
+    insert into bloodglucose
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="familyUserId != null" >
+        familyUserId,
+      </if>
+      <if test="glucose != null" >
+        glucose,
+      </if>
+      <if test="meal != null" >
+        meal,
+      </if>
+      <if test="medicine != null" >
+        medicine,
+      </if>
+      <if test="backup != null" >
+        backup,
+      </if>
+      <if test="creatTime != null" >
+        creatTime,
+      </if>
+      <if test="updateTime != null" >
+        updateTime,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="familyUserId != null" >
+        #{familyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="glucose != null" >
+        #{glucose,jdbcType=INTEGER},
+      </if>
+      <if test="meal != null" >
+        #{meal,jdbcType=INTEGER},
+      </if>
+      <if test="medicine != null" >
+        #{medicine,jdbcType=INTEGER},
+      </if>
+      <if test="backup != null" >
+        #{backup,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.dcare.po.BloodGlucose" >
+    update bloodglucose
+    <set >
+      <if test="familyUserId != null" >
+        familyUserId = #{familyUserId,jdbcType=INTEGER},
+      </if>
+      <if test="glucose != null" >
+        glucose = #{glucose,jdbcType=INTEGER},
+      </if>
+      <if test="meal != null" >
+        meal = #{meal,jdbcType=INTEGER},
+      </if>
+      <if test="medicine != null" >
+        medicine = #{medicine,jdbcType=INTEGER},
+      </if>
+      <if test="backup != null" >
+        backup = #{backup,jdbcType=VARCHAR},
+      </if>
+      <if test="creatTime != null" >
+        creatTime = #{creatTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.dcare.po.BloodGlucose" >
+    update bloodglucose
+    set familyUserId = #{familyUserId,jdbcType=INTEGER},
+      glucose = #{glucose,jdbcType=INTEGER},
+      meal = #{meal,jdbcType=INTEGER},
+      medicine = #{medicine,jdbcType=INTEGER},
+      backup = #{backup,jdbcType=VARCHAR},
+      creatTime = #{creatTime,jdbcType=TIMESTAMP},
+      updateTime = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  
+  
+   <select id="selectByTime" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from bloodglucose
+    where familyUserId = #{familyUserId}
+    AND createTime &gt; #{startTime} and createTime &lt; #{endTime}
+    ORDER BY id DESC
+  </select>
+  
+</mapper>
+
+
+

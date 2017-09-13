@@ -50,6 +50,10 @@ public enum AppErrorEnums{
 	APP_ERROR_SHARE_USER_BEYOND(-22,"共享用户超过人数限制"),
 	
 	APP_ERROR_SHARE_USER_NOT_EXIST(-23,"共享用户不存在"),
+	
+	
+	APP_ERROR_BLOOD_GLUCOSE_FAMILY_USER_CAN_NOT_CHANGE(-24,"血糖记录不能更新家庭用户"),
+	
 	/*
 	 * int ALREADY_RECEIVE = 2;//已领取奖励 
 	int SUCCESS = 1;//成功
