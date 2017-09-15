@@ -132,7 +132,7 @@
     <include refid="Base_Column_List" />
     from bloodglucose
     where familyUserId = #{familyUserId}
-    AND createTime &gt; #{startTime} and createTime &lt; #{endTime}
+    AND creatTime &gt; #{startTime} and creatTime &lt; #{endTime}
     ORDER BY id DESC
   </select>
   

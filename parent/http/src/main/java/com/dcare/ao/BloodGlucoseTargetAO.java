@@ -2,83 +2,83 @@ package com.dcare.ao;
 
 public class BloodGlucoseTargetAO {
 
-	private int limosisMin;  //空腹最低值
+	private float limosisMin;  //空腹最低值
 	
-	private int limosisMax;  //空腹最高值
+	private float limosisMax;  //空腹最高值
 	
-	private int beforeMealMin;  //饭前最低值
+	private float beforeMealMin;  //饭前最低值
 	
-	private int beforeMealMax;	//饭前最高值
+	private float beforeMealMax;	//饭前最高值
 	
-	private int afterMealMin;	//饭后最低值
+	private float afterMealMin;	//饭后最低值
 	
-	private int afterMealMax;	//饭后最高值
+	private float afterMealMax;	//饭后最高值
 	
-	private int beforeSleepMin;	//睡前最低值
+	private float beforeSleepMin;	//睡前最低值
 	
-	private int beforeSleepMax; //睡前最高值
+	private float beforeSleepMax; //睡前最高值
 
-	public int getLimosisMin() {
+	public float getLimosisMin() {
 		return limosisMin;
 	}
 
-	public void setLimosisMin(int limosisMin) {
+	public void setLimosisMin(float limosisMin) {
 		this.limosisMin = limosisMin;
 	}
 
-	public int getLimosisMax() {
+	public float getLimosisMax() {
 		return limosisMax;
 	}
 
-	public void setLimosisMax(int limosisMax) {
+	public void setLimosisMax(float limosisMax) {
 		this.limosisMax = limosisMax;
 	}
 
-	public int getBeforeMealMin() {
+	public float getBeforeMealMin() {
 		return beforeMealMin;
 	}
 
-	public void setBeforeMealMin(int beforeMealMin) {
+	public void setBeforeMealMin(float beforeMealMin) {
 		this.beforeMealMin = beforeMealMin;
 	}
 
-	public int getBeforeMealMax() {
+	public float getBeforeMealMax() {
 		return beforeMealMax;
 	}
 
-	public void setBeforeMealMax(int beforeMealMax) {
+	public void setBeforeMealMax(float beforeMealMax) {
 		this.beforeMealMax = beforeMealMax;
 	}
 
-	public int getAfterMealMin() {
+	public float getAfterMealMin() {
 		return afterMealMin;
 	}
 
-	public void setAfterMealMin(int afterMealMin) {
+	public void setAfterMealMin(float afterMealMin) {
 		this.afterMealMin = afterMealMin;
 	}
 
-	public int getAfterMealMax() {
+	public float getAfterMealMax() {
 		return afterMealMax;
 	}
 
-	public void setAfterMealMax(int afterMealMax) {
+	public void setAfterMealMax(float afterMealMax) {
 		this.afterMealMax = afterMealMax;
 	}
 
-	public int getBeforeSleepMin() {
+	public float getBeforeSleepMin() {
 		return beforeSleepMin;
 	}
 
-	public void setBeforeSleepMin(int beforeSleepMin) {
+	public void setBeforeSleepMin(float beforeSleepMin) {
 		this.beforeSleepMin = beforeSleepMin;
 	}
 
-	public int getBeforeSleepMax() {
+	public float getBeforeSleepMax() {
 		return beforeSleepMax;
 	}
 
-	public void setBeforeSleepMax(int beforeSleepMax) {
+	public void setBeforeSleepMax(float beforeSleepMax) {
 		this.beforeSleepMax = beforeSleepMax;
 	}
 	

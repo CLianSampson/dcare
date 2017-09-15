@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class BloodGlucoseListAO {
 	
-	private int id; //家庭用户id
+	private int familyUserId; //家庭用户id
 	
 	private Date startTime;
 	
@@ -12,12 +12,12 @@ public class BloodGlucoseListAO {
 	
 	
 
-	public int getId() {
-		return id;
+	public int getFamilyUserId() {
+		return familyUserId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFamilyUserId(int familyUserId) {
+		this.familyUserId = familyUserId;
 	}
 
 	public Date getStartTime() {

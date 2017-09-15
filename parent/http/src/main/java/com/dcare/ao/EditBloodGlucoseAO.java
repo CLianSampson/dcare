@@ -9,7 +9,7 @@ package com.dcare.ao;
  */
 public class EditBloodGlucoseAO {
 	
-	private int id;  //家庭用户id
+	private int familyUserId;  //家庭用户id
 	
 	private int glucose; //血糖值
 	
@@ -19,7 +19,7 @@ public class EditBloodGlucoseAO {
 	
 	private String backup; //备注
 	
-	private int recordid; //记录id，对应数据库主键id
+	private int id; //记录id，对应数据库主键id
 
 	public int getId() {
 		return id;
@@ -61,12 +61,14 @@ public class EditBloodGlucoseAO {
 		this.backup = backup;
 	}
 
-	public int getRecordid() {
-		return recordid;
+	public int getFamilyUserId() {
+		return familyUserId;
 	}
 
-	public void setRecordid(int recordid) {
-		this.recordid = recordid;
+	public void setFamilyUserId(int familyUserId) {
+		this.familyUserId = familyUserId;
 	}
+
+	
 	
 }

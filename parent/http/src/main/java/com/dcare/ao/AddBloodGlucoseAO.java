@@ -8,7 +8,7 @@ package com.dcare.ao;
  *
  */
 public class AddBloodGlucoseAO {
-	private int id;  //家庭用户id
+	private int familyUserId;  //家庭用户id
 	
 	private int glucose; //血糖值
 	
@@ -18,12 +18,13 @@ public class AddBloodGlucoseAO {
 	
 	private String backup; //备注
 
-	public int getId() {
-		return id;
+	
+	public int getFamilyUserId() {
+		return familyUserId;
 	}
 
-	public void setId(int id) {
-		this.id = id;
+	public void setFamilyUserId(int familyUserId) {
+		this.familyUserId = familyUserId;
 	}
 
 	public int getGlucose() {

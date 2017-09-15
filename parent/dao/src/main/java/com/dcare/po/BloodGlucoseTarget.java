@@ -3,107 +3,107 @@ package com.dcare.po;
 import java.util.Date;
 
 public class BloodGlucoseTarget {
-    private Integer id;
+    private Float id;
 
-    private Integer userId;
+    private int userId;
 
-    private Integer limosisMin;
+    private Float limosisMin;
 
-    private Integer limosisMax;
+    private Float limosisMax;
 
-    private Integer beforeMealMin;
+    private Float beforeMealMin;
 
-    private Integer beforeMealMax;
+    private Float beforeMealMax;
 
-    private Integer afterMealMin;
+    private Float afterMealMin;
 
-    private Integer afterMealMax;
+    private Float afterMealMax;
 
-    private Integer beforeSleepMin;
+    private Float beforeSleepMin;
 
-    private Integer beforeSleepMax;
+    private Float beforeSleepMax;
 
     private Date createTime;
 
     private Date updateTime;
 
-    public Integer getId() {
+    public Float getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(Float id) {
         this.id = id;
     }
 
-    public Integer getUserId() {
+    public int getUserId() {
         return userId;
     }
 
-    public void setUserId(Integer userId) {
+    public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public Integer getLimosisMin() {
+    public Float getLimosisMin() {
         return limosisMin;
     }
 
-    public void setLimosisMin(Integer limosisMin) {
+    public void setLimosisMin(Float limosisMin) {
         this.limosisMin = limosisMin;
     }
 
-    public Integer getLimosisMax() {
+    public Float getLimosisMax() {
         return limosisMax;
     }
 
-    public void setLimosisMax(Integer limosisMax) {
+    public void setLimosisMax(Float limosisMax) {
         this.limosisMax = limosisMax;
     }
 
-    public Integer getBeforeMealMin() {
+    public Float getBeforeMealMin() {
         return beforeMealMin;
     }
 
-    public void setBeforeMealMin(Integer beforeMealMin) {
+    public void setBeforeMealMin(Float beforeMealMin) {
         this.beforeMealMin = beforeMealMin;
     }
 
-    public Integer getBeforeMealMax() {
+    public Float getBeforeMealMax() {
         return beforeMealMax;
     }
 
-    public void setBeforeMealMax(Integer beforeMealMax) {
+    public void setBeforeMealMax(Float beforeMealMax) {
         this.beforeMealMax = beforeMealMax;
     }
 
-    public Integer getAfterMealMin() {
+    public Float getAfterMealMin() {
         return afterMealMin;
     }
 
-    public void setAfterMealMin(Integer afterMealMin) {
+    public void setAfterMealMin(Float afterMealMin) {
         this.afterMealMin = afterMealMin;
     }
 
-    public Integer getAfterMealMax() {
+    public Float getAfterMealMax() {
         return afterMealMax;
     }
 
-    public void setAfterMealMax(Integer afterMealMax) {
+    public void setAfterMealMax(Float afterMealMax) {
         this.afterMealMax = afterMealMax;
     }
 
-    public Integer getBeforeSleepMin() {
+    public Float getBeforeSleepMin() {
         return beforeSleepMin;
     }
 
-    public void setBeforeSleepMin(Integer beforeSleepMin) {
+    public void setBeforeSleepMin(Float beforeSleepMin) {
         this.beforeSleepMin = beforeSleepMin;
     }
 
-    public Integer getBeforeSleepMax() {
+    public Float getBeforeSleepMax() {
         return beforeSleepMax;
     }
 
-    public void setBeforeSleepMax(Integer beforeSleepMax) {
+    public void setBeforeSleepMax(Float beforeSleepMax) {
         this.beforeSleepMax = beforeSleepMax;
     }
 

@@ -41,7 +41,7 @@ public class SMSUtil {
     public final static String TEMPLATE_SHARE_USER = "191306";//共享用户
 
     // 验证码有效时间 单位：分钟
-    public final static String CLOOPEN_VALID_TIME = "60s";
+    public final static String CLOOPEN_VALID_TIME = "60分钟";
 
     // 语音验证 显示号码
     public final static String OFFICIAL_PHONE = "0755-86544040";

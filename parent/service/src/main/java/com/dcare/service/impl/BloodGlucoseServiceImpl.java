@@ -42,9 +42,11 @@ public class BloodGlucoseServiceImpl implements BloodGlucoseService{
 
 	public AppErrorEnums update(BloodGlucose bloodGlucose) {
 		BloodGlucose recordInDB = bloodGlucoseDO.selectByPrimaryKey(bloodGlucose.getId());
-		if (recordInDB.getFamilyUserId().equals(bloodGlucose.getFamilyUserId())) {
-			return AppErrorEnums.APP_ERROR_BLOOD_GLUCOSE_FAMILY_USER_CAN_NOT_CHANGE;
-		}
+		
+		//去掉限制
+//		if (recordInDB.getFamilyUserId().equals(bloodGlucose.getFamilyUserId())) {
+//			return AppErrorEnums.APP_ERROR_BLOOD_GLUCOSE_FAMILY_USER_CAN_NOT_CHANGE;
+//		}
 		
 		
 		bloodGlucoseDO.updateByPrimaryKeySelective(bloodGlucose);

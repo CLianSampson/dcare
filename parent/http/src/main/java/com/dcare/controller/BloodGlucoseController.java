@@ -82,7 +82,7 @@ public class BloodGlucoseController extends BaseController {
 					break;
 				}
 				
-				if (0 == addBloodGlucoseAO.getId()) {
+				if (0 == addBloodGlucoseAO.getFamilyUserId()) {
 					logger.error("上传血糖参数错误，收到参数错误，家庭成员不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
@@ -95,7 +95,7 @@ public class BloodGlucoseController extends BaseController {
 				BloodGlucose bloodGlucose = new BloodGlucose();
 				bloodGlucose.setBackup(addBloodGlucoseAO.getBackup());
 				bloodGlucose.setCreatTime(new Date());
-				bloodGlucose.setFamilyUserId(addBloodGlucoseAO.getId());
+				bloodGlucose.setFamilyUserId(addBloodGlucoseAO.getFamilyUserId());
 				bloodGlucose.setGlucose(addBloodGlucoseAO.getGlucose());
 				bloodGlucose.setMeal(addBloodGlucoseAO.getMeal());
 				bloodGlucose.setMedicine(addBloodGlucoseAO.getMedicine());
@@ -162,7 +162,7 @@ public class BloodGlucoseController extends BaseController {
 					break;
 				}
 				
-				if (0==editBloodGlucoseAO.getId() || 0==editBloodGlucoseAO.getRecordid()) {
+				if (1>editBloodGlucoseAO.getId() || 1>editBloodGlucoseAO.getFamilyUserId()) {
 					logger.error("编辑血糖参数错误，收到参数错误，家庭成员不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
@@ -175,11 +175,11 @@ public class BloodGlucoseController extends BaseController {
 				BloodGlucose bloodGlucose = new BloodGlucose();
 				bloodGlucose.setBackup(editBloodGlucoseAO.getBackup());
 				bloodGlucose.setCreatTime(new Date());
-				bloodGlucose.setFamilyUserId(editBloodGlucoseAO.getId());
+				bloodGlucose.setFamilyUserId(editBloodGlucoseAO.getFamilyUserId());
 				bloodGlucose.setGlucose(editBloodGlucoseAO.getGlucose());
 				bloodGlucose.setMeal(editBloodGlucoseAO.getMeal());
 				bloodGlucose.setMedicine(editBloodGlucoseAO.getMedicine());
-				bloodGlucose.setId(editBloodGlucoseAO.getRecordid());
+				bloodGlucose.setId(editBloodGlucoseAO.getId());
 				
 				
 				rtv = bloodGlucoseService.update(bloodGlucose);
@@ -245,7 +245,7 @@ public class BloodGlucoseController extends BaseController {
 					break;
 				}
 				
-				if (bloodGlucoseListAO.getId()<1) {
+				if (bloodGlucoseListAO.getFamilyUserId()<1) {
 					logger.error("获取血糖参数错误，收到参数错误，家庭成员不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
@@ -264,7 +264,7 @@ public class BloodGlucoseController extends BaseController {
 				}
 				
 			
-				returnList = bloodGlucoseService.getBloodGlucose(bloodGlucoseListAO.getId(), bloodGlucoseListAO.getStartTime(), bloodGlucoseListAO.getEndTime());
+				returnList = bloodGlucoseService.getBloodGlucose(bloodGlucoseListAO.getFamilyUserId(), bloodGlucoseListAO.getStartTime(), bloodGlucoseListAO.getEndTime());
 				
 				
         		break;
@@ -330,7 +330,41 @@ public class BloodGlucoseController extends BaseController {
 					break;
 				}
 				
+				if (bloodGlucoseTargetAO.getAfterMealMax()<1 || bloodGlucoseTargetAO.getAfterMealMax()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
 				
+				if (bloodGlucoseTargetAO.getAfterMealMin()<1 || bloodGlucoseTargetAO.getAfterMealMin()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (bloodGlucoseTargetAO.getBeforeMealMax()<1 || bloodGlucoseTargetAO.getBeforeMealMax()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (bloodGlucoseTargetAO.getBeforeMealMin()<1 || bloodGlucoseTargetAO.getBeforeMealMin()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (bloodGlucoseTargetAO.getBeforeSleepMax()<1 || bloodGlucoseTargetAO.getBeforeSleepMax()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (bloodGlucoseTargetAO.getBeforeSleepMin()<1 || bloodGlucoseTargetAO.getBeforeSleepMin()>35) {
+					logger.error("设置血糖目标值参数错误，收到参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
 				
 				//在shirofilter中已经校验过，此处不用校验
 				String token = packet.getToken();
