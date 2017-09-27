@@ -7,7 +7,7 @@ public class BloodGlucose {
 
     private Integer familyUserId;
 
-    private Integer glucose;
+    private Float glucose;
 
     private Integer meal;
 
@@ -35,11 +35,11 @@ public class BloodGlucose {
         this.familyUserId = familyUserId;
     }
 
-    public Integer getGlucose() {
+    public Float getGlucose() {
         return glucose;
     }
 
-    public void setGlucose(Integer glucose) {
+    public void setGlucose(Float glucose) {
         this.glucose = glucose;
     }
 

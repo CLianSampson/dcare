@@ -22,7 +22,7 @@ public interface BloodGlucoseService {
 	
 	List<BloodGlucose> getBloodGlucose(int familyUserId, Date startTime,Date endTime);
 	
-	void addaddBloodGlucoseTarget(BloodGlucoseTarget bloodGlucoseTarget);
+	void addBloodGlucoseTarget(BloodGlucoseTarget bloodGlucoseTarget);
 	
 	BloodGlucoseTarget getBloodGlucoseTarget(int userId);
 

@@ -11,7 +11,7 @@ public class EditBloodGlucoseAO {
 	
 	private int familyUserId;  //家庭用户id
 	
-	private int glucose; //血糖值
+	private float glucose; //血糖值
 	
 	private int meal; //哪一餐
 	
@@ -29,11 +29,11 @@ public class EditBloodGlucoseAO {
 		this.id = id;
 	}
 
-	public int getGlucose() {
+	public float getGlucose() {
 		return glucose;
 	}
 
-	public void setGlucose(int glucose) {
+	public void setGlucose(float glucose) {
 		this.glucose = glucose;
 	}
 

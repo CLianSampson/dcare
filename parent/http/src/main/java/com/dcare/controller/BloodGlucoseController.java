@@ -174,7 +174,6 @@ public class BloodGlucoseController extends BaseController {
         	
 				BloodGlucose bloodGlucose = new BloodGlucose();
 				bloodGlucose.setBackup(editBloodGlucoseAO.getBackup());
-				bloodGlucose.setCreatTime(new Date());
 				bloodGlucose.setFamilyUserId(editBloodGlucoseAO.getFamilyUserId());
 				bloodGlucose.setGlucose(editBloodGlucoseAO.getGlucose());
 				bloodGlucose.setMeal(editBloodGlucoseAO.getMeal());
@@ -376,13 +375,14 @@ public class BloodGlucoseController extends BaseController {
 				bloodGlucoseTarget.setAfterMealMax(bloodGlucoseTargetAO.getAfterMealMax());
 				bloodGlucoseTarget.setAfterMealMin(bloodGlucoseTargetAO.getAfterMealMin());
 				bloodGlucoseTarget.setBeforeMealMax(bloodGlucoseTargetAO.getBeforeMealMax());
+				bloodGlucoseTarget.setBeforeMealMin(bloodGlucoseTargetAO.getBeforeMealMin());
 				bloodGlucoseTarget.setBeforeSleepMax(bloodGlucoseTargetAO.getBeforeSleepMax());
 				bloodGlucoseTarget.setBeforeSleepMin(bloodGlucoseTargetAO.getBeforeSleepMin());
 				bloodGlucoseTarget.setLimosisMax(bloodGlucoseTargetAO.getLimosisMax());
 				bloodGlucoseTarget.setLimosisMin(bloodGlucoseTargetAO.getLimosisMin());
 				
 				
-				bloodGlucoseService.addaddBloodGlucoseTarget(bloodGlucoseTarget);
+				bloodGlucoseService.addBloodGlucoseTarget(bloodGlucoseTarget);
 				
 				
         		break;

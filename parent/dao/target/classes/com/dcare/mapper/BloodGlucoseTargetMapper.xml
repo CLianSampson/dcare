@@ -4,14 +4,14 @@
   <resultMap id="BaseResultMap" type="com.dcare.po.BloodGlucoseTarget" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="userId" property="userId" jdbcType="INTEGER" />
-    <result column="limosisMin" property="limosisMin" jdbcType="FLOAT" />
-    <result column="limosisMax" property="limosisMax" jdbcType="FLOAT" />
-    <result column="beforeMealMin" property="beforeMealMin" jdbcType="FLOAT" />
-    <result column="beforeMealMax" property="beforeMealMax" jdbcType="FLOAT" />
-    <result column="afterMealMin" property="afterMealMin" jdbcType="FLOAT" />
-    <result column="afterMealMax" property="afterMealMax" jdbcType="FLOAT" />
-    <result column="beforeSleepMin" property="beforeSleepMin" jdbcType="FLOAT" />
-    <result column="beforeSleepMax" property="beforeSleepMax" jdbcType="FLOAT" />
+    <result column="limosisMin" property="limosisMin" jdbcType="REAL" />
+    <result column="limosisMax" property="limosisMax" jdbcType="REAL" />
+    <result column="beforeMealMin" property="beforeMealMin" jdbcType="REAL" />
+    <result column="beforeMealMax" property="beforeMealMax" jdbcType="REAL" />
+    <result column="afterMealMin" property="afterMealMin" jdbcType="REAL" />
+    <result column="afterMealMax" property="afterMealMax" jdbcType="REAL" />
+    <result column="beforeSleepMin" property="beforeSleepMin" jdbcType="REAL" />
+    <result column="beforeSleepMax" property="beforeSleepMax" jdbcType="REAL" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
@@ -23,11 +23,11 @@
     select 
     <include refid="Base_Column_List" />
     from bloodglucosetarget
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from bloodglucosetarget
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.dcare.po.BloodGlucoseTarget" >
     insert into bloodglucosetarget (id, userId, limosisMin, 
@@ -35,10 +35,10 @@
       afterMealMin, afterMealMax, beforeSleepMin, 
       beforeSleepMax, createTime, updateTime
       )
-    values (#{id,jdbcType=INTEGER}, #{userId,jdbcType=INTEGER}, #{limosisMin,jdbcType=INTEGER}, 
-      #{limosisMax,jdbcType=INTEGER}, #{beforeMealMin,jdbcType=INTEGER}, #{beforeMealMax,jdbcType=INTEGER}, 
-      #{afterMealMin,jdbcType=INTEGER}, #{afterMealMax,jdbcType=INTEGER}, #{beforeSleepMin,jdbcType=INTEGER}, 
-      #{beforeSleepMax,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+    values (#{id}, #{userId}, #{limosisMin}, 
+      #{limosisMax}, #{beforeMealMin}, #{beforeMealMax}, 
+      #{afterMealMin}, #{afterMealMax}, #{beforeSleepMin}, 
+      #{beforeSleepMax}, #{createTime}, #{updateTime}
       )
   </insert>
   <insert id="insertSelective" parameterType="com.dcare.po.BloodGlucoseTarget" >
@@ -83,40 +83,40 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id},
       </if>
       <if test="userId != null" >
-        #{userId,jdbcType=INTEGER},
+        #{userId},
       </if>
       <if test="limosisMin != null" >
-        #{limosisMin,jdbcType=INTEGER},
+        #{limosisMin},
       </if>
       <if test="limosisMax != null" >
-        #{limosisMax,jdbcType=INTEGER},
+        #{limosisMax},
       </if>
       <if test="beforeMealMin != null" >
-        #{beforeMealMin,jdbcType=INTEGER},
+        #{beforeMealMin},
       </if>
       <if test="beforeMealMax != null" >
-        #{beforeMealMax,jdbcType=INTEGER},
+        #{beforeMealMax},
       </if>
       <if test="afterMealMin != null" >
-        #{afterMealMin,jdbcType=INTEGER},
+        #{afterMealMin},
       </if>
       <if test="afterMealMax != null" >
-        #{afterMealMax,jdbcType=INTEGER},
+        #{afterMealMax},
       </if>
       <if test="beforeSleepMin != null" >
-        #{beforeSleepMin,jdbcType=INTEGER},
+        #{beforeSleepMin},
       </if>
       <if test="beforeSleepMax != null" >
-        #{beforeSleepMax,jdbcType=INTEGER},
+        #{beforeSleepMax},
       </if>
       <if test="createTime != null" >
-        #{createTime,jdbcType=TIMESTAMP},
+        #{createTime},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime},
       </if>
     </trim>
   </insert>
@@ -124,55 +124,55 @@
     update bloodglucosetarget
     <set >
       <if test="userId != null" >
-        userId = #{userId,jdbcType=INTEGER},
+        userId = #{userId},
       </if>
       <if test="limosisMin != null" >
-        limosisMin = #{limosisMin,jdbcType=INTEGER},
+        limosisMin = #{limosisMin},
       </if>
       <if test="limosisMax != null" >
-        limosisMax = #{limosisMax,jdbcType=INTEGER},
+        limosisMax = #{limosisMax},
       </if>
       <if test="beforeMealMin != null" >
-        beforeMealMin = #{beforeMealMin,jdbcType=INTEGER},
+        beforeMealMin = #{beforeMealMin},
       </if>
       <if test="beforeMealMax != null" >
-        beforeMealMax = #{beforeMealMax,jdbcType=INTEGER},
+        beforeMealMax = #{beforeMealMax},
       </if>
       <if test="afterMealMin != null" >
-        afterMealMin = #{afterMealMin,jdbcType=INTEGER},
+        afterMealMin = #{afterMealMin},
       </if>
       <if test="afterMealMax != null" >
-        afterMealMax = #{afterMealMax,jdbcType=INTEGER},
+        afterMealMax = #{afterMealMax},
       </if>
       <if test="beforeSleepMin != null" >
-        beforeSleepMin = #{beforeSleepMin,jdbcType=INTEGER},
+        beforeSleepMin = #{beforeSleepMin},
       </if>
       <if test="beforeSleepMax != null" >
-        beforeSleepMax = #{beforeSleepMax,jdbcType=INTEGER},
+        beforeSleepMax = #{beforeSleepMax},
       </if>
       <if test="createTime != null" >
-        createTime = #{createTime,jdbcType=TIMESTAMP},
+        createTime = #{createTime},
       </if>
       <if test="updateTime != null" >
-        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+        updateTime = #{updateTime},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dcare.po.BloodGlucoseTarget" >
     update bloodglucosetarget
-    set userId = #{userId,jdbcType=INTEGER},
-      limosisMin = #{limosisMin,jdbcType=INTEGER},
-      limosisMax = #{limosisMax,jdbcType=INTEGER},
-      beforeMealMin = #{beforeMealMin,jdbcType=INTEGER},
-      beforeMealMax = #{beforeMealMax,jdbcType=INTEGER},
-      afterMealMin = #{afterMealMin,jdbcType=INTEGER},
-      afterMealMax = #{afterMealMax,jdbcType=INTEGER},
-      beforeSleepMin = #{beforeSleepMin,jdbcType=INTEGER},
-      beforeSleepMax = #{beforeSleepMax,jdbcType=INTEGER},
-      createTime = #{createTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    set userId = #{userId},
+      limosisMin = #{limosisMin},
+      limosisMax = #{limosisMax},
+      beforeMealMin = #{beforeMealMin},
+      beforeMealMax = #{beforeMealMax},
+      afterMealMin = #{afterMealMin},
+      afterMealMax = #{afterMealMax},
+      beforeSleepMin = #{beforeSleepMin},
+      beforeSleepMax = #{beforeSleepMax},
+      createTime = #{createTime},
+      updateTime = #{updateTime}
+    where id = #{id}
   </update>
   
    <select id="selectByUserId" resultMap="BaseResultMap" parameterType="java.lang.Integer" >

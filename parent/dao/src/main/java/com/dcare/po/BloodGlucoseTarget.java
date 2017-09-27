@@ -3,7 +3,7 @@ package com.dcare.po;
 import java.util.Date;
 
 public class BloodGlucoseTarget {
-    private Float id;
+    private int id;
 
     private int userId;
 
@@ -27,11 +27,11 @@ public class BloodGlucoseTarget {
 
     private Date updateTime;
 
-    public Float getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(Float id) {
+    public void setId(int id) {
         this.id = id;
     }
 
@@ -122,4 +122,19 @@ public class BloodGlucoseTarget {
     public void setUpdateTime(Date updateTime) {
         this.updateTime = updateTime;
     }
+
+	@Override
+	public String toString() {
+		return "BloodGlucoseTarget [id=" + id + ", userId=" + userId
+				+ ", limosisMin=" + limosisMin + ", limosisMax=" + limosisMax
+				+ ", beforeMealMin=" + beforeMealMin + ", beforeMealMax="
+				+ beforeMealMax + ", afterMealMin=" + afterMealMin
+				+ ", afterMealMax=" + afterMealMax + ", beforeSleepMin="
+				+ beforeSleepMin + ", beforeSleepMax=" + beforeSleepMax
+				+ ", createTime=" + createTime + ", updateTime=" + updateTime
+				+ "]";
+	}
+    
+    
+    
 }

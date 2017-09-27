@@ -4,7 +4,7 @@
   <resultMap id="BaseResultMap" type="com.dcare.po.BloodGlucose" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="familyUserId" property="familyUserId" jdbcType="INTEGER" />
-    <result column="glucose" property="glucose" jdbcType="INTEGER" />
+    <result column="glucose" property="glucose" jdbcType="REAL" />
     <result column="meal" property="meal" jdbcType="INTEGER" />
     <result column="medicine" property="medicine" jdbcType="INTEGER" />
     <result column="backup" property="backup" jdbcType="VARCHAR" />
@@ -18,19 +18,19 @@
     select 
     <include refid="Base_Column_List" />
     from bloodglucose
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from bloodglucose
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </delete>
   <insert id="insert" parameterType="com.dcare.po.BloodGlucose" >
     insert into bloodglucose (id, familyUserId, glucose, 
       meal, medicine, backup, 
       creatTime, updateTime)
-    values (#{id,jdbcType=INTEGER}, #{familyUserId,jdbcType=INTEGER}, #{glucose,jdbcType=INTEGER}, 
-      #{meal,jdbcType=INTEGER}, #{medicine,jdbcType=INTEGER}, #{backup,jdbcType=VARCHAR}, 
-      #{creatTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
+    values (#{id}, #{familyUserId}, #{glucose}, 
+      #{meal}, #{medicine}, #{backup}, 
+      #{creatTime}, #{updateTime})
   </insert>
   <insert id="insertSelective" parameterType="com.dcare.po.BloodGlucose" >
     insert into bloodglucose
@@ -62,28 +62,28 @@
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
       <if test="id != null" >
-        #{id,jdbcType=INTEGER},
+        #{id},
       </if>
       <if test="familyUserId != null" >
-        #{familyUserId,jdbcType=INTEGER},
+        #{familyUserId},
       </if>
       <if test="glucose != null" >
-        #{glucose,jdbcType=INTEGER},
+        #{glucose},
       </if>
       <if test="meal != null" >
-        #{meal,jdbcType=INTEGER},
+        #{meal},
       </if>
       <if test="medicine != null" >
-        #{medicine,jdbcType=INTEGER},
+        #{medicine},
       </if>
       <if test="backup != null" >
-        #{backup,jdbcType=VARCHAR},
+        #{backup},
       </if>
       <if test="creatTime != null" >
-        #{creatTime,jdbcType=TIMESTAMP},
+        #{creatTime},
       </if>
       <if test="updateTime != null" >
-        #{updateTime,jdbcType=TIMESTAMP},
+        #{updateTime},
       </if>
     </trim>
   </insert>
@@ -91,39 +91,39 @@
     update bloodglucose
     <set >
       <if test="familyUserId != null" >
-        familyUserId = #{familyUserId,jdbcType=INTEGER},
+        familyUserId = #{familyUserId},
       </if>
       <if test="glucose != null" >
-        glucose = #{glucose,jdbcType=INTEGER},
+        glucose = #{glucose},
       </if>
       <if test="meal != null" >
-        meal = #{meal,jdbcType=INTEGER},
+        meal = #{meal},
       </if>
       <if test="medicine != null" >
-        medicine = #{medicine,jdbcType=INTEGER},
+        medicine = #{medicine},
       </if>
       <if test="backup != null" >
-        backup = #{backup,jdbcType=VARCHAR},
+        backup = #{backup},
       </if>
       <if test="creatTime != null" >
-        creatTime = #{creatTime,jdbcType=TIMESTAMP},
+        creatTime = #{creatTime},
       </if>
       <if test="updateTime != null" >
-        updateTime = #{updateTime,jdbcType=TIMESTAMP},
+        updateTime = #{updateTime},
       </if>
     </set>
-    where id = #{id,jdbcType=INTEGER}
+    where id = #{id}
   </update>
   <update id="updateByPrimaryKey" parameterType="com.dcare.po.BloodGlucose" >
     update bloodglucose
-    set familyUserId = #{familyUserId,jdbcType=INTEGER},
-      glucose = #{glucose,jdbcType=INTEGER},
-      meal = #{meal,jdbcType=INTEGER},
-      medicine = #{medicine,jdbcType=INTEGER},
-      backup = #{backup,jdbcType=VARCHAR},
-      creatTime = #{creatTime,jdbcType=TIMESTAMP},
-      updateTime = #{updateTime,jdbcType=TIMESTAMP}
-    where id = #{id,jdbcType=INTEGER}
+    set familyUserId = #{familyUserId},
+      glucose = #{glucose},
+      meal = #{meal},
+      medicine = #{medicine},
+      backup = #{backup},
+      creatTime = #{creatTime},
+      updateTime = #{updateTime}
+    where id = #{id}
   </update>
   
   

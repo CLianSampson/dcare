@@ -6,7 +6,6 @@ package com.dcare.service.impl;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.ibatis.jdbc.Null;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +47,7 @@ public class BloodGlucoseServiceImpl implements BloodGlucoseService{
 //			return AppErrorEnums.APP_ERROR_BLOOD_GLUCOSE_FAMILY_USER_CAN_NOT_CHANGE;
 //		}
 		
+		bloodGlucose.setUpdateTime(new Date());
 		
 		bloodGlucoseDO.updateByPrimaryKeySelective(bloodGlucose);
 		
@@ -63,7 +63,8 @@ public class BloodGlucoseServiceImpl implements BloodGlucoseService{
 
 	
 	
-	public void addaddBloodGlucoseTarget(BloodGlucoseTarget bloodGlucoseTarget) {
+	public void addBloodGlucoseTarget(BloodGlucoseTarget bloodGlucoseTarget) {
+		System.out.println("bloodGlucoseTarget is :" + bloodGlucoseTarget.toString());
 		BloodGlucoseTarget recordInDB = bloodGlucoseTargetDO.selectByUserId(bloodGlucoseTarget.getUserId());
 		if (null == recordInDB) {
 			//没有则添加
@@ -83,7 +84,7 @@ public class BloodGlucoseServiceImpl implements BloodGlucoseService{
 
 	public BloodGlucoseTarget getBloodGlucoseTarget(int userId) {
 		
-		return bloodGlucoseTargetDO.selectByPrimaryKey(userId);
+		return bloodGlucoseTargetDO.selectByUserId(userId);
 	}
 
 	
