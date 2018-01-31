@@ -615,6 +615,7 @@ public class StringUtil {
 				"");
 	}
 
+	
 
 	public static String notNull(String str) {
 		if (str == null) {

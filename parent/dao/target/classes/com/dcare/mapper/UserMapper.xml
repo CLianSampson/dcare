@@ -4,12 +4,14 @@
   <resultMap id="BaseResultMap" type="com.dcare.po.User" >
     <id column="id" property="id" jdbcType="INTEGER" />
     <result column="phone" property="phone" jdbcType="VARCHAR" />
+    <result column="mail" property="mail" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
     <result column="token" property="token" jdbcType="VARCHAR" />
     <result column="createTime" property="createTime" jdbcType="TIMESTAMP" />
     <result column="updateTime" property="updateTime" jdbcType="TIMESTAMP" />
   </resultMap>
   <sql id="Base_Column_List" >
-    id, phone, token, createTime, updateTime
+    id, phone, mail,password,token, createTime, updateTime
   </sql>
   <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
     select 
@@ -22,9 +24,9 @@
     where id = #{id,jdbcType=INTEGER}
   </delete>
   <insert id="insert" parameterType="com.dcare.po.User" >
-    insert into user (id, phone, token, 
+    insert into user (id, phone, mail,password, token, 
       createTime, updateTime)
-    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
+    values (#{id,jdbcType=INTEGER}, #{phone,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, #{token,jdbcType=VARCHAR}, 
       #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP})
   </insert>
   <insert id="insertSelective" parameterType="com.dcare.po.User" >
@@ -34,6 +36,12 @@
         id,
       </if>
       <if test="phone != null" >
+        phone,
+      </if>
+       <if test="mail != null" >
+        phone,
+      </if>
+       <if test="password != null" >
         phone,
       </if>
       <if test="token != null" >
@@ -53,6 +61,12 @@
       <if test="phone != null" >
         #{phone,jdbcType=VARCHAR},
       </if>
+      <if test="mail != null" >
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
       <if test="token != null" >
         #{token,jdbcType=VARCHAR},
       </if>
@@ -70,6 +84,12 @@
       <if test="phone != null" >
         phone = #{phone,jdbcType=VARCHAR},
       </if>
+       <if test="mail != null" >
+        phone = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        phone = #{password,jdbcType=VARCHAR},
+      </if>
       <if test="token != null" >
         token = #{token,jdbcType=VARCHAR},
       </if>
@@ -85,6 +105,8 @@
   <update id="updateByPrimaryKey" parameterType="com.dcare.po.User" >
     update user
     set phone = #{phone,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
       token = #{token,jdbcType=VARCHAR},
       createTime = #{createTime,jdbcType=TIMESTAMP},
       updateTime = #{updateTime,jdbcType=TIMESTAMP}
@@ -97,6 +119,13 @@
     <include refid="Base_Column_List" />
     from user
     where phone = #{phone}
+  </select>
+  
+  <select id="selectByMail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+    select 
+    <include refid="Base_Column_List" />
+    from user
+    where mail = #{mail}
   </select>
   
 </mapper>

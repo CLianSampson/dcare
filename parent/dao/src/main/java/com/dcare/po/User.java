@@ -6,6 +6,10 @@ public class User {
     private Integer id;
 
     private String phone;
+    
+    private String mail;
+    
+    private String password;
 
     private String token;
 
@@ -28,8 +32,24 @@ public class User {
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
+    
+    public String getMail() {
+		return mail;
+	}
 
-    public String getToken() {
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public String getToken() {
         return token;
     }
 

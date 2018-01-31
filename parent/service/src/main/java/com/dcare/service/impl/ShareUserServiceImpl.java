@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.dcare.common.code.AppErrorEnums;
+import com.dcare.common.util.MailUtil;
 import com.dcare.common.util.SMSUtil;
 import com.dcare.common.util.StringUtil;
 import com.dcare.dao.ShareUserDO;
@@ -103,14 +104,26 @@ public class ShareUserServiceImpl implements ShareUserService {
 			
 			String lastFourWord = phone.substring(7, 11);
 			
-			//发送验证码
-			Map<String, Object> map = SMSUtil.sendSMS(temp.getPhone(), new String[] { lastFourWord, temperaturesStr }, SMSUtil.TEMPLATE_SHARE_USER);
-			if (!"000000".equals(map.get("statusCode"))) { // 正常返回输出data包体信息（map）
-				// 异常返回输出错误码和错误信息
-				logger.error("错误码=" + map.get("statusCode") + " 错误信息= " + map.get("statusMsg"));
-				return AppErrorEnums.APP_VERIFY_SEND_EXCEEDING;
-				
+			if (StringUtil.isNullOrBlank(temp.getPhone())) {
+				try {
+					MailUtil.sendMail(temp.getMail(), "高温报警", "用户您好，您的温度已超过"+temperaturesStr);
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+					return AppErrorEnums.APP_ERROR_SEND_MAIL_ERROR;
+				}
+			}else {
+				//发送验证码
+				Map<String, Object> map = SMSUtil.sendSMS(temp.getPhone(), new String[] { lastFourWord, temperaturesStr }, SMSUtil.TEMPLATE_SHARE_USER);
+				if (!"000000".equals(map.get("statusCode"))) { // 正常返回输出data包体信息（map）
+					// 异常返回输出错误码和错误信息
+					logger.error("错误码=" + map.get("statusCode") + " 错误信息= " + map.get("statusMsg"));
+					return AppErrorEnums.APP_VERIFY_SEND_EXCEEDING;
+					
+				}
 			}
+			
+		
 		}
 		
 		return AppErrorEnums.APP_OK;

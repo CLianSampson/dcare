@@ -5,6 +5,10 @@ public class LoginAO {
 	
 	private String code;
 	
+	private String mail;
+	
+	private String password;
+	
 	private String deviceId;
 
 	public String getPhone() {
@@ -21,6 +25,22 @@ public class LoginAO {
 
 	public void setCode(String code) {
 		this.code = code;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
 	public String getDeviceId() {

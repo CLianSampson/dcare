@@ -3,6 +3,8 @@ package com.dcare.ao;
 public class EditshareUserAO {
 	private String phone;
 	
+	private String mail;
+	
 	private String nickname;
 	
 	private int id;
@@ -13,6 +15,14 @@ public class EditshareUserAO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 
 	public String getNickname() {

@@ -16,4 +16,7 @@ public interface UserDO {
     int updateByPrimaryKey(User record);
     
     User selectByPhone(String phone);
+    
+    User selectByMail(String mail);
+    
 }

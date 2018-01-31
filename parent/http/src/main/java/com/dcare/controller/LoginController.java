@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.alibaba.fastjson.JSON;
 import com.dcare.ao.LoginAO;
+import com.dcare.ao.MailRegisterAO;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.code.AttributeConst;
 import com.dcare.common.message.Packet;
@@ -79,77 +80,39 @@ public class LoginController extends BaseController{
 			
 			LoginAO loginAO = JSON.parseObject(packet.getData(), LoginAO.class);
 			
-			if (StringUtil.isNullOrBlank(loginAO.getPhone())) {
+			if (StringUtil.isNullOrBlank(loginAO.getPhone()) && StringUtil.isNullOrBlank(loginAO.getMail())) {
 				rtv = AppErrorEnums.APP_ERROR_PHONE;
-				logger.error("登录错误，手机号为空");
+				logger.error("登录错误，手机号和邮箱同时为空");
 				break;
 			}
 			
-			
-			//登录时短信验证码一定不为空
-			if (StringUtil.isNullOrBlank(loginAO.getCode())) {
-				rtv = AppErrorEnums.APP_CODE_WRONG;
-				logger.error("登录错误，验证码为空");
-				break;	
+			if (!StringUtil.isNullOrBlank(loginAO.getPhone()) && !StringUtil.isNullOrBlank(loginAO.getMail())) {
+				rtv = AppErrorEnums.APP_ERROR_PHONE;
+				logger.error("登录错误，手机号和邮箱同时不为空");
+				break;
 			}
-			
 			
 			if (StringUtil.isNullOrBlank(loginAO.getDeviceId())) {
 				rtv = AppErrorEnums.APP_ARGS_ERRORS;
 				logger.error("登录错误，设备号为空");
-				break;	
+				break;
 			}
 			
-			
-			
-			
-			if (loginAO.getPhone().equals("17888888888") && loginAO.getCode().equals("8888")) {
-				//ios审核账号
-			}else {
-				//登录时短信验证码一定不为空
-				Sms sms = smsService.findAppUserSmsByPhone(loginAO.getPhone());
-				if (null == sms || !sms.getMsg().equals(loginAO.getCode())) {
-					rtv = AppErrorEnums.APP_CODE_WRONG;
-					logger.error("登录错误，验证码错误");
-					break;	
+			User user = null;
+			//邮箱登陆
+			if (!StringUtil.isNullOrBlank(loginAO.getMail())) {
+				rtv = mailLogin(loginAO);
+				if (rtv != AppErrorEnums.APP_OK) {
+					break;
 				}
-			}
-				
-			
-			
-			User user = userDO.selectByPhone(loginAO.getPhone());
-			if (null == user) {
-
-				//新建用户
-				user = new User();
-				
-				user.setPhone(loginAO.getPhone());
-				user.setCreateTime(new Date());
-				user.setUpdateTime(new Date());
-				
-				
-				userDO.insertSelective(user);
-				
-				user = userDO.selectByPhone(loginAO.getPhone());
-				
-				String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
-				
-				//更新token
-				user.setToken(token);
-				userDO.updateByPrimaryKeySelective(user);
-				
-				//增加共享联系人
-				Family family = new Family();
-				family.setRelation(AttributeConst.RELATION_MYSELF);
-				family.setUserId(user.getId());
-				family.setNickname(AttributeConst.DEFAULT_NICKNAME);
-				familyDO.insertSelective(family);
+			    user = userDO.selectByMail(loginAO.getMail());
 			}else {
-				//更新token
-				String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
-				
-				user.setToken(token);
-				userDO.updateByPrimaryKeySelective(user);
+			//手机号登陆	
+				rtv = phoneLogin(loginAO);
+				if (rtv != AppErrorEnums.APP_OK) {
+					break;
+				}
+				user = userDO.selectByPhone(loginAO.getPhone());
 			}
 			
 			returnFamily = familyDO.selectByUserId(user.getId());
@@ -164,8 +127,6 @@ public class LoginController extends BaseController{
 			returnUserId = user.getId();
 		}
 		
-		
-		
 		Packet rtvPacket = getRtv(new Packet(), AppErrorEnums.APP_OK);
 		
 		Map<String, Object> map = new HashMap<String, Object>();
@@ -178,6 +139,204 @@ public class LoginController extends BaseController{
 		
 		returnJson(response, rtvPacket);
 	}
+	
+	
+	
+	
+	private AppErrorEnums mailLogin(LoginAO loginAO){
+		if (StringUtil.isNullOrBlank(loginAO.getPassword())) {
+			return AppErrorEnums.APP_PASSWD_ERROR;
+		}
+		
+		User user = userDO.selectByMail(loginAO.getMail());
+		if (null == user) {
+
+			return AppErrorEnums.APP_NOT_EXIST_USER;
+		}else {
+			//更新token
+			String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
+			
+			user.setToken(token);
+			userDO.updateByPrimaryKeySelective(user);
+		}
+			
+		return AppErrorEnums.APP_OK;
+	}
+	
+	
+	private AppErrorEnums phoneLogin(LoginAO loginAO){
+		AppErrorEnums rtv;
+		//登录时短信验证码一定不为空
+		if (StringUtil.isNullOrBlank(loginAO.getCode())) {
+			rtv = AppErrorEnums.APP_CODE_WRONG;
+			logger.error("登录错误，验证码为空");
+			
+			return rtv;
+		}
+		
+		if (loginAO.getPhone().equals("17888888888") && loginAO.getCode().equals("8888")) {
+			//ios审核账号
+		}else {
+			//登录时短信验证码一定不为空
+			Sms sms = smsService.findAppUserSmsByPhone(loginAO.getPhone());
+			if (null == sms || !sms.getMsg().equals(loginAO.getCode())) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("登录错误，验证码错误");
+				return rtv;
+			}
+		}
+			
+		User user = userDO.selectByPhone(loginAO.getPhone());
+		if (null == user) {
+
+			//新建用户
+			user = new User();
+			
+			user.setPhone(loginAO.getPhone());
+			user.setCreateTime(new Date());
+			user.setUpdateTime(new Date());
+			
+			
+			userDO.insertSelective(user);
+			
+			user = userDO.selectByPhone(loginAO.getPhone());
+			
+			String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
+			
+			//更新token
+			user.setToken(token);
+			userDO.updateByPrimaryKeySelective(user);
+			
+			//增加共享联系人
+			Family family = new Family();
+			family.setRelation(AttributeConst.RELATION_MYSELF);
+			family.setUserId(user.getId());
+			family.setNickname(AttributeConst.DEFAULT_NICKNAME);
+			familyDO.insertSelective(family);
+		}else {
+			//更新token
+			String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
+			
+			user.setToken(token);
+			userDO.updateByPrimaryKeySelective(user);
+		}
+
+		return AppErrorEnums.APP_OK;
+	}
+	
+	/**
+	 * 通过邮箱注册
+	 */
+	@RequestMapping(value = "/mailRegister", method = RequestMethod.POST)
+	public void register(@RequestBody String requestString ,HttpServletResponse response) {
+		logger.info("通过邮箱注册:" + requestString.toString());
+		
+		Packet packet = JSON.parseObject(requestString, Packet.class);
+		
+		logger.info("packet is :" + packet);
+		
+		AppErrorEnums rtv = AppErrorEnums.APP_OK;//默认成功
+		
+		boolean loopFlag = true;
+		
+		String returnToken = null;
+		int returnUserId = 0;
+		List<Family> returnFamily = null; //本人
+		while(loopFlag){
+			loopFlag = false;
+			
+			if (StringUtil.isNullOrBlank(packet.getData())) {
+				rtv = AppErrorEnums.APP_ARGS_ERRORS;
+				logger.error("通过邮箱注册错误，参数为空");
+				break;
+			}
+			
+			MailRegisterAO mailRegisterAO = JSON.parseObject(packet.getData(), MailRegisterAO.class);
+			
+			if (StringUtil.isNullOrBlank(mailRegisterAO.getMail())) {
+				rtv = AppErrorEnums.APP_ERROR_PHONE;
+				logger.error("通过邮箱注册错误，邮箱为空");
+				break;
+			}
+			
+			
+			//通过邮箱注册时短信验证码一定不为空
+			if (StringUtil.isNullOrBlank(mailRegisterAO.getCode())) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("通过邮箱注册错误，验证码为空");
+				break;	
+			}
+			
+			if (StringUtil.isNullOrBlank(mailRegisterAO.getPassword())) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("通过邮箱注册密码错误，密码为空");
+				break;	
+			}
+			
+			if (StringUtil.isNullOrBlank(mailRegisterAO.getDeviceId())) {
+				rtv = AppErrorEnums.APP_ARGS_ERRORS;
+				logger.error("登录错误，设备号为空");
+				break;	
+			}
+			
+			
+			User user = userDO.selectByPhone(mailRegisterAO.getMail());
+			if (null == user) {
+
+				//新建用户
+				user = new User();
+				
+				user.setMail(mailRegisterAO.getMail());
+				user.setPassword(mailRegisterAO.getPassword());
+				user.setCreateTime(new Date());
+				user.setUpdateTime(new Date());
+				
+				
+				userDO.insertSelective(user);
+				
+				user = userDO.selectByMail(mailRegisterAO.getMail());
+				returnUserId = user.getId();
+				
+				String token = TokenUtil.getToken(user.getId(), mailRegisterAO.getDeviceId());
+				
+				//更新token
+				user.setToken(token);
+				userDO.updateByPrimaryKeySelective(user);
+				
+				//增加共享联系人
+				Family family = new Family();
+				family.setRelation(AttributeConst.RELATION_MYSELF);
+				family.setUserId(user.getId());
+				family.setNickname(AttributeConst.DEFAULT_NICKNAME);
+				familyDO.insertSelective(family);
+			}else {
+				rtv = AppErrorEnums.APP_ERROR_MAIL_EXIST;
+			}
+		
+		}
+		
+
+		Packet rtvPacket = getRtv(new Packet(), AppErrorEnums.APP_OK);
+		
+		if (rtv == AppErrorEnums.APP_OK) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", returnUserId);
+//			map.put("family", returnFamily);
+			
+			rtvPacket.setData(JSON.toJSONString(map));
+		}else {
+			rtvPacket.setData(rtv.getMessage());
+		}
+		
+		
+		rtvPacket.setCode(rtv.getCode());
+		rtvPacket.setToken(returnToken);
+		
+		returnJson(response, rtvPacket);
+	}
+	
+	
+	
 	
 	
 	public static void main(String[] args){

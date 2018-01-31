@@ -54,6 +54,13 @@ public enum AppErrorEnums{
 	
 	APP_ERROR_BLOOD_GLUCOSE_FAMILY_USER_CAN_NOT_CHANGE(-24,"血糖记录不能更新家庭用户"),
 	
+	
+	
+	APP_ERROR_MAIL_EXIST(-30,"邮箱已存在"),
+	
+	APP_ERROR_SEND_MAIL_ERROR(-30,"发送邮件错误"),
+	
+	
 	/*
 	 * int ALREADY_RECEIVE = 2;//已领取奖励 
 	int SUCCESS = 1;//成功

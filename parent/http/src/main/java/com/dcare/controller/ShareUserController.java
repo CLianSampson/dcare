@@ -76,7 +76,7 @@ public class ShareUserController extends BaseController {
 					break;
 				}
 				
-				if (StringUtil.isNullOrBlank(addShareUserAO.getPhone())) {
+				if (StringUtil.isNullOrBlank(addShareUserAO.getPhone()) && StringUtil.isNullOrBlank(addShareUserAO.getMail())) {
 					logger.error("新增共享用户参数错误，收到参数错误，手机号不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
@@ -90,6 +90,7 @@ public class ShareUserController extends BaseController {
 				shareUser.setCreateTime(new Date());
 				shareUser.setNickNanme(addShareUserAO.getNickname());
 				shareUser.setPhone(addShareUserAO.getPhone());
+				shareUser.setMail(addShareUserAO.getMail());
 				shareUser.setUserId(appUserId);
 			  
 				rtv = shareUserService.addShareUser(shareUser);
@@ -283,6 +284,7 @@ public class ShareUserController extends BaseController {
 				shareUser.setId(editshareUserAO.getId());
 				shareUser.setNickNanme(editshareUserAO.getNickname());
 				shareUser.setPhone(editshareUserAO.getPhone());
+				shareUser.setMail(editshareUserAO.getMail());
 				shareUser.setUpdateTime(new Date());
 				shareUser.setUserId(appUserId);
 				

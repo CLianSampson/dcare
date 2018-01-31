@@ -10,6 +10,8 @@ public class ShareUser {
     private String nickNanme;
 
     private String phone;
+    
+    private String mail;
 
     private Date createTime;
 
@@ -46,8 +48,16 @@ public class ShareUser {
     public void setPhone(String phone) {
         this.phone = phone == null ? null : phone.trim();
     }
+    
+    public String getMail() {
+		return mail;
+	}
 
-    public Date getCreateTime() {
+	public void setMail(String mail) {
+		this.mail = mail;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

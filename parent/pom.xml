@@ -76,6 +76,7 @@
 		<httpclient_version>4.2.5</httpclient_version>
 		<commons_httpclient_version>3.1</commons_httpclient_version>
 		<fastjson_version>1.2.31</fastjson_version>
+		<mail_version>1.4.7</mail_version>
 	</properties>
   
   
@@ -370,6 +371,12 @@
 			    <artifactId>fastjson</artifactId>
 			    <version>${fastjson_version}</version>
 			</dependency>
+			
+			<dependency>
+		      <groupId>javax.mail</groupId>
+		      <artifactId>mail</artifactId>
+		      <version>${mail_version}</version>
+      		</dependency>
 			
 		</dependencies>
 		
