@@ -227,7 +227,7 @@ public class SmsController extends BaseController {
 //					break;
 //				}
 				
-				MailUtil.sendMail(userMail, "注册", "您的验证码是"+code);
+				MailUtil.sendMail(userMail, "confirm your registration", code);
 				
 				
 				// 添加短信发送记录

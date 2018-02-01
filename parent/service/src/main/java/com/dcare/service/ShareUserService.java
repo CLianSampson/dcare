@@ -21,5 +21,7 @@ public interface ShareUserService {
 	
 	List<ShareUser> getAllShareUser(int userId);
 	
-	AppErrorEnums sendSms(int userId,String phone,float temperature);
+	AppErrorEnums sendSmsByPhone(int userId,String phone,float temperature);
+	
+	AppErrorEnums sendSmsByMail(int userId,String mail,float temperature);
 }

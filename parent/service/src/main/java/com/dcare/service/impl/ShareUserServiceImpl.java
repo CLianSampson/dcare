@@ -41,7 +41,7 @@ public class ShareUserServiceImpl implements ShareUserService {
 			return AppErrorEnums.APP_ERROR_SHARE_USER_BEYOND;
 		}
 		
-		shareUserDO.insert(shareUser);
+		shareUserDO.insertSelective(shareUser);
 		
 		return AppErrorEnums.APP_OK;
 	}
@@ -96,7 +96,7 @@ public class ShareUserServiceImpl implements ShareUserService {
 
 
 	
-	public AppErrorEnums sendSms(int userId,String phone,float temperature) {
+	public AppErrorEnums sendSmsByPhone(int userId,String phone,float temperature) {
 		List<ShareUser> recordInDbList = shareUserDO.selectAllShareUser(userId);
 		
 		for (ShareUser temp : recordInDbList) {
@@ -104,31 +104,40 @@ public class ShareUserServiceImpl implements ShareUserService {
 			
 			String lastFourWord = phone.substring(7, 11);
 			
+			//发送验证码
+			Map<String, Object> map = SMSUtil.sendSMS(temp.getPhone(), new String[] { lastFourWord, temperaturesStr }, SMSUtil.TEMPLATE_SHARE_USER);
+			if (!"000000".equals(map.get("statusCode"))) { // 正常返回输出data包体信息（map）
+				// 异常返回输出错误码和错误信息
+				logger.error("错误码=" + map.get("statusCode") + " 错误信息= " + map.get("statusMsg"));
+				return AppErrorEnums.APP_VERIFY_SEND_EXCEEDING;
+			}
+		}
+		
+		return AppErrorEnums.APP_OK;
+	}
+	
+	
+	public AppErrorEnums sendSmsByMail(int userId,String mail,float temperature) {
+		List<ShareUser> recordInDbList = shareUserDO.selectAllShareUser(userId);
+		
+		for (ShareUser temp : recordInDbList) {
+			String  temperaturesStr = "" + temperature; 
+			
 			if (StringUtil.isNullOrBlank(temp.getPhone())) {
 				try {
-					MailUtil.sendMail(temp.getMail(), "高温报警", "用户您好，您的温度已超过"+temperaturesStr);
+					MailUtil.sendMail(temp.getMail(), mail+"High temperature alarm" , "The user's temperature exceeds " + temperature + "degrees.");
 				} catch (Exception e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 					return AppErrorEnums.APP_ERROR_SEND_MAIL_ERROR;
 				}
-			}else {
-				//发送验证码
-				Map<String, Object> map = SMSUtil.sendSMS(temp.getPhone(), new String[] { lastFourWord, temperaturesStr }, SMSUtil.TEMPLATE_SHARE_USER);
-				if (!"000000".equals(map.get("statusCode"))) { // 正常返回输出data包体信息（map）
-					// 异常返回输出错误码和错误信息
-					logger.error("错误码=" + map.get("statusCode") + " 错误信息= " + map.get("statusMsg"));
-					return AppErrorEnums.APP_VERIFY_SEND_EXCEEDING;
-					
-				}
 			}
-			
-		
 		}
 		
 		return AppErrorEnums.APP_OK;
 		
 	}
+	
 	
 }
 

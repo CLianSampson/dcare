@@ -128,14 +128,21 @@ public class LoginController extends BaseController{
 		}
 		
 		Packet rtvPacket = getRtv(new Packet(), AppErrorEnums.APP_OK);
+		if (rtv == AppErrorEnums.APP_OK) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("userId", returnUserId);
+			map.put("family", returnFamily);
+			
+			rtvPacket.setData(JSON.toJSONString(map));
+		}else {
+			rtvPacket.setData(rtv.getMessage());
+		}
 		
-		Map<String, Object> map = new HashMap<String, Object>();
-		map.put("userId", returnUserId);
-		map.put("family", returnFamily);
 		
-		rtvPacket.setData(JSON.toJSONString(map));
 		rtvPacket.setCode(rtv.getCode());
 		rtvPacket.setToken(returnToken);
+		
+		logger.info("用户登陆结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
@@ -153,6 +160,11 @@ public class LoginController extends BaseController{
 
 			return AppErrorEnums.APP_NOT_EXIST_USER;
 		}else {
+			
+			if (!user.getPassword().equals(loginAO.getPassword())) {
+				return AppErrorEnums.APP_PASSWD_ERROR;
+			}
+			
 			//更新token
 			String token = TokenUtil.getToken(user.getId(), loginAO.getDeviceId());
 			
@@ -227,7 +239,7 @@ public class LoginController extends BaseController{
 	/**
 	 * 通过邮箱注册
 	 */
-	@RequestMapping(value = "/mailRegister", method = RequestMethod.POST)
+	@RequestMapping(value = "/register", method = RequestMethod.POST)
 	public void register(@RequestBody String requestString ,HttpServletResponse response) {
 		logger.info("通过邮箱注册:" + requestString.toString());
 		
@@ -267,6 +279,20 @@ public class LoginController extends BaseController{
 				break;	
 			}
 			
+			//校验验证码
+			Sms sms = smsService.findAppUserSmsByPhone(mailRegisterAO.getMail());
+			if (null == sms) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("通过邮箱注册错误，邮箱不存在");
+				break;	
+			}
+			
+			if (!sms.getMsg().equals(mailRegisterAO.getCode())) {
+				rtv = AppErrorEnums.APP_CODE_WRONG;
+				logger.error("通过邮箱注册错误，验证码错误");
+				break;	
+			}
+			
 			if (StringUtil.isNullOrBlank(mailRegisterAO.getPassword())) {
 				rtv = AppErrorEnums.APP_CODE_WRONG;
 				logger.error("通过邮箱注册密码错误，密码为空");
@@ -280,7 +306,7 @@ public class LoginController extends BaseController{
 			}
 			
 			
-			User user = userDO.selectByPhone(mailRegisterAO.getMail());
+			User user = userDO.selectByMail(mailRegisterAO.getMail());
 			if (null == user) {
 
 				//新建用户
@@ -328,17 +354,15 @@ public class LoginController extends BaseController{
 			rtvPacket.setData(rtv.getMessage());
 		}
 		
-		
 		rtvPacket.setCode(rtv.getCode());
 		rtvPacket.setToken(returnToken);
+		
+		logger.info("用户登陆结束 ，返回的信息是  ： " + rtvPacket);
 		
 		returnJson(response, rtvPacket);
 	}
 	
-	
-	
-	
-	
+
 	public static void main(String[] args){
 		
 	}

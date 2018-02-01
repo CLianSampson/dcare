@@ -26,7 +26,9 @@ import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
 import com.dcare.common.util.TokenUtil;
 import com.dcare.po.ShareUser;
+import com.dcare.po.User;
 import com.dcare.service.ShareUserService;
+import com.dcare.service.UserService;
 
 /**
  * @author sampson
@@ -38,6 +40,9 @@ public class ShareUserController extends BaseController {
 	
 	@Autowired
 	private ShareUserService shareUserService;
+	
+	@Autowired
+	private UserService userService;
 	
 	/**
 	 * 新增共享用户
@@ -77,7 +82,7 @@ public class ShareUserController extends BaseController {
 				}
 				
 				if (StringUtil.isNullOrBlank(addShareUserAO.getPhone()) && StringUtil.isNullOrBlank(addShareUserAO.getMail())) {
-					logger.error("新增共享用户参数错误，收到参数错误，手机号不能为空");
+					logger.error("新增共享用户参数错误，收到参数错误，手机号和邮箱不能同时为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
@@ -85,7 +90,25 @@ public class ShareUserController extends BaseController {
 				//在shirofilter中已经校验过，此处不用校验
 				String token = packet.getToken();
 				int appUserId = TokenUtil.getUserIdByToken(token);
+				
+				User user = userService.getuserById(appUserId);
+				if (StringUtil.isNullOrBlank(user.getPhone())) {
+					if (StringUtil.isNullOrBlank(user.getMail())) {
+						logger.error("新增共享用户参数错误，收到参数错误，国外用户邮箱不能为空");
+						rtv = AppErrorEnums.APP_ARGS_ERRORS;
+						break;
+					}
+				}
         	
+				
+				if (StringUtil.isNullOrBlank(user.getMail())) {
+					if (StringUtil.isNullOrBlank(user.getPhone())) {
+						logger.error("新增共享用户参数错误，收到参数错误，中国用户手机不能为空");
+						rtv = AppErrorEnums.APP_ARGS_ERRORS;
+						break;
+					}
+				}
+				
 				ShareUser shareUser = new ShareUser();
 				shareUser.setCreateTime(new Date());
 				shareUser.setNickNanme(addShareUserAO.getNickname());
@@ -347,7 +370,16 @@ public class ShareUserController extends BaseController {
 					break;
 				}
 				
-				if (StringUtil.isNullOrBlank(shareUserSendSmsAO.getPhone())) {
+				String phone = shareUserSendSmsAO.getPhone();
+				String mail = shareUserSendSmsAO.getMail();
+				
+				if (StringUtil.isNullOrBlank(phone) && StringUtil.isNullOrBlank(mail)) {
+					logger.error("给共享用户发送短信参数错误");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				if (!StringUtil.isNullOrBlank(phone) && !StringUtil.isNullOrBlank(mail)) {
 					logger.error("给共享用户发送短信参数错误");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
@@ -357,7 +389,13 @@ public class ShareUserController extends BaseController {
 				String token = packet.getToken();
 				int appUserId = TokenUtil.getUserIdByToken(token);
 			
-				rtv = shareUserService.sendSms(appUserId,shareUserSendSmsAO.getPhone(),shareUserSendSmsAO.getTemp());
+				if (StringUtil.isNullOrBlank(phone)) {
+					rtv = shareUserService.sendSmsByMail(appUserId,shareUserSendSmsAO.getMail(),shareUserSendSmsAO.getTemp());
+				}else {
+					rtv = shareUserService.sendSmsByPhone(appUserId,shareUserSendSmsAO.getPhone(),shareUserSendSmsAO.getTemp());
+				}
+				
+				
 				
         		break;
 			}

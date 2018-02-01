@@ -39,10 +39,10 @@
         phone,
       </if>
        <if test="mail != null" >
-        phone,
+        mail,
       </if>
        <if test="password != null" >
-        phone,
+        password,
       </if>
       <if test="token != null" >
         token,
@@ -85,10 +85,10 @@
         phone = #{phone,jdbcType=VARCHAR},
       </if>
        <if test="mail != null" >
-        phone = #{mail,jdbcType=VARCHAR},
+        mail = #{mail,jdbcType=VARCHAR},
       </if>
       <if test="password != null" >
-        phone = #{password,jdbcType=VARCHAR},
+        password = #{password,jdbcType=VARCHAR},
       </if>
       <if test="token != null" >
         token = #{token,jdbcType=VARCHAR},
@@ -121,11 +121,12 @@
     where phone = #{phone}
   </select>
   
-  <select id="selectByMail" resultMap="BaseResultMap" parameterType="java.lang.String" >
+   <select id="selectByMail" resultMap="BaseResultMap" parameterType="java.lang.String" >
     select 
     <include refid="Base_Column_List" />
     from user
     where mail = #{mail}
   </select>
+  
   
 </mapper>

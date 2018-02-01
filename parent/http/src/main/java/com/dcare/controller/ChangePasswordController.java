@@ -80,16 +80,9 @@ private static Logger logger = Logger.getLogger(ChangePasswordController.class);
 				}
 				
 				String password = changePasswordAO.getPassword();
-				String repassword = changePasswordAO.getRepassword();
 				
 				if (StringUtil.isNullOrBlank(password)) {
 					logger.error("通过邮箱修改密码参数错误，收到参数错误，密码不能为空");
-					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					break;
-				}
-		  
-				if (StringUtil.isNullOrBlank(repassword)) {
-					logger.error("通过邮箱修改密码参数错误，收到参数错误，确认密码不能为空");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
@@ -99,15 +92,6 @@ private static Logger logger = Logger.getLogger(ChangePasswordController.class);
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
-		  
-				
-				if (!password.equals(repassword)) {
-					logger.error("通过邮箱修改密码参数错误，收到参数错误，密码不想等"
-							+ "");
-					rtv = AppErrorEnums.APP_ARGS_ERRORS;
-					break;
-				}
-				
 				
 				String token = packet.getToken();
 				User user = userService.getuserById(TokenUtil.getUserIdByToken(token));

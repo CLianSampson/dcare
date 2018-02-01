@@ -6,8 +6,6 @@ public class ChangePasswordAO {
 	
 	private String password;
 	
-	private String repassword;
-
 	public String getCode() {
 		return code;
 	}
@@ -24,13 +22,6 @@ public class ChangePasswordAO {
 		this.password = password;
 	}
 
-	public String getRepassword() {
-		return repassword;
-	}
-
-	public void setRepassword(String repassword) {
-		this.repassword = repassword;
-	}
 	
 	
 }

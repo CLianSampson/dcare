@@ -5,6 +5,8 @@ public class ShareUserSendSmsAO {
 	
 	private String phone;
 
+	private String mail;
+	
 	public float getTemp() {
 		return temp;
 	}
@@ -19,6 +21,14 @@ public class ShareUserSendSmsAO {
 
 	public void setPhone(String phone) {
 		this.phone = phone;
+	}
+
+	public String getMail() {
+		return mail;
+	}
+
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 	
 	

@@ -89,7 +89,7 @@ public class AuthFilter implements Filter {
 			// 业务中不要有太多的if else嵌套不要太深 建议用这种方式
 			while (true) {
 				
-				//免登接口不需要经过shiro  
+				//免登接口不需要经过shiro    
 				if (  uri.equals("/verifyCode/smsVerify") 
 					|| uri.equals("/verifyCode/voiceVerify") 
 					|| uri.equals("/login")  
@@ -97,7 +97,9 @@ public class AuthFilter implements Filter {
 					|| uri.equals("/healthInfo")
 					|| uri.equals("/goodsList")
 					|| uri.equals("/iostest")
-					|| uri.equals("/upload")){
+					|| uri.equals("/upload")  
+					|| uri.equals("/verifyCode/emailVerify")
+					|| uri.equals("/register")){
 					
 					chain.doFilter(request, response);
 					return;
