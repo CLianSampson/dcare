@@ -227,7 +227,10 @@ public class SmsController extends BaseController {
 //					break;
 //				}
 				
-				MailUtil.sendMail(userMail, "confirm your registration", code);
+				
+				String codeString =  "【Care Monitor】Your verification code is "  + code +" ,please enter correctly in 10 minutes.";
+				
+				MailUtil.sendMail(userMail, "confirm your registration", codeString);
 				
 				
 				// 添加短信发送记录

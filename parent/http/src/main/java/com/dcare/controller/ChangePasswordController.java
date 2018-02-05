@@ -93,8 +93,14 @@ private static Logger logger = Logger.getLogger(ChangePasswordController.class);
 					break;
 				}
 				
-				String token = packet.getToken();
-				User user = userService.getuserById(TokenUtil.getUserIdByToken(token));
+				
+				if (StringUtil.isNullOrBlank(changePasswordAO.getMail())) {
+					logger.error("通过邮箱修改密码参数错误，收到参数错误，邮箱不能为空");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				User user = userDO.selectByMail(changePasswordAO.getMail());
 				
 				user.setPassword(password);
 				userDO.updateByPrimaryKey(user);
