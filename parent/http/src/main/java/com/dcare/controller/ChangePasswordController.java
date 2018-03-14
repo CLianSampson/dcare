@@ -20,7 +20,9 @@ import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
 import com.dcare.common.util.TokenUtil;
+import com.dcare.dao.SmsDO;
 import com.dcare.dao.UserDO;
+import com.dcare.po.Sms;
 import com.dcare.po.User;
 import com.dcare.service.FamilyService;
 import com.dcare.service.UserService;
@@ -41,6 +43,9 @@ private static Logger logger = Logger.getLogger(ChangePasswordController.class);
 	
 	@Autowired
 	private UserDO userDO;
+	
+	@Autowired
+	private SmsDO smsDO;
 	
 	/**
 	 * 通过邮箱修改密码
@@ -96,6 +101,14 @@ private static Logger logger = Logger.getLogger(ChangePasswordController.class);
 				
 				if (StringUtil.isNullOrBlank(changePasswordAO.getMail())) {
 					logger.error("通过邮箱修改密码参数错误，收到参数错误，邮箱不能为空");
+					rtv = AppErrorEnums.APP_ARGS_ERRORS;
+					break;
+				}
+				
+				
+				Sms sms = smsDO.selectByPhone(changePasswordAO.getMail());
+				if (!sms.getMsg().equals(changePasswordAO.getCode())) {
+					logger.error("通过邮箱修改密码参数错误，收到参数错误，验证码不相等");
 					rtv = AppErrorEnums.APP_ARGS_ERRORS;
 					break;
 				}
