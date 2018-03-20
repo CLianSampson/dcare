@@ -5,4 +5,6 @@ import com.dcare.po.User;
 public interface UserService {
 	
 	User getuserById(int id);
+	
+	int update(User user);
 }

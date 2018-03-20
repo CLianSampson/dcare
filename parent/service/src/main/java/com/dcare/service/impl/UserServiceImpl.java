@@ -20,5 +20,13 @@ public class UserServiceImpl implements UserService {
 		
 		return userDO.selectByPrimaryKey(id);
 	}
+
+	public int update(User user) {
+		return userDO.updateByPrimaryKeySelective(user);
+		
+	}
+	
+	
+	
 	
 }

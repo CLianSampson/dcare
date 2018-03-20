@@ -61,6 +61,13 @@ public enum AppErrorEnums{
 	APP_ERROR_SEND_MAIL_ERROR(-30,"发送邮件错误"),
 	
 	
+	APP_ERROR_PLATFORM_NULL_ERROR(-40,"平台号错误"),
+	
+	APP_ERROR_DEVICETOKEN_NULL_ERROR(-40,"设备号错误"),
+	
+	
+	
+	
 	/*
 	 * int ALREADY_RECEIVE = 2;//已领取奖励 
 	int SUCCESS = 1;//成功

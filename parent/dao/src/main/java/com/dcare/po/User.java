@@ -12,6 +12,10 @@ public class User {
     private String password;
 
     private String token;
+    
+    private Integer paltform;
+    
+    private String deviceToken;
 
     private Date createTime;
 
@@ -56,8 +60,26 @@ public class User {
     public void setToken(String token) {
         this.token = token == null ? null : token.trim();
     }
+    
+    
 
-    public Date getCreateTime() {
+    public Integer getPaltform() {
+		return paltform;
+	}
+
+	public void setPaltform(Integer paltform) {
+		this.paltform = paltform;
+	}
+
+	public String getDeviceToken() {
+		return deviceToken;
+	}
+
+	public void setDeviceToken(String deviceToken) {
+		this.deviceToken = deviceToken;
+	}
+
+	public Date getCreateTime() {
         return createTime;
     }
 

@@ -77,6 +77,11 @@
 		<commons_httpclient_version>3.1</commons_httpclient_version>
 		<fastjson_version>1.2.31</fastjson_version>
 		<mail_version>1.4.7</mail_version>
+		<apns_version>0.1.6</apns_version>
+		<!-- apns推送库 -->
+		<fernandospr_version>2.3.1</fernandospr_version>
+
+			
 	</properties>
   
   
@@ -377,6 +382,19 @@
 		      <artifactId>mail</artifactId>
 		      <version>${mail_version}</version>
       		</dependency>
+      		
+      		<!-- https://mvnrepository.com/artifact/com.notnoop.apns/apns -->
+			<dependency>
+			    <groupId>com.notnoop.apns</groupId>
+			    <artifactId>apns</artifactId>
+			    <version>${apns_version}</version>
+			</dependency>
+
+      		<dependency>
+		           <groupId>com.github.fernandospr</groupId>
+		           <artifactId>javapns-jdk16</artifactId>
+		           <version>${fernandospr_version}</version>
+       		</dependency>
 			
 		</dependencies>
 		

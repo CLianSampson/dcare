@@ -19,7 +19,6 @@ import com.dcare.ao.ChangePasswordAO;
 import com.dcare.common.code.AppErrorEnums;
 import com.dcare.common.message.Packet;
 import com.dcare.common.util.StringUtil;
-import com.dcare.common.util.TokenUtil;
 import com.dcare.dao.SmsDO;
 import com.dcare.dao.UserDO;
 import com.dcare.po.Sms;
