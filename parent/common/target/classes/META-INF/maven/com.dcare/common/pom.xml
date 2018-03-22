@@ -115,12 +115,8 @@
 	      <artifactId>mail</artifactId>
       </dependency>
       <!-- 邮件end -->
-      
-       <dependency>
-	      <groupId>com.notnoop.apns</groupId>
-	      <artifactId>apns</artifactId>
-      </dependency>
-      
+   
+          
     	<dependency>
            <groupId>com.github.fernandospr</groupId>
            <artifactId>javapns-jdk16</artifactId>

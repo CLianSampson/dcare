@@ -383,13 +383,7 @@
 		      <version>${mail_version}</version>
       		</dependency>
       		
-      		<!-- https://mvnrepository.com/artifact/com.notnoop.apns/apns -->
-			<dependency>
-			    <groupId>com.notnoop.apns</groupId>
-			    <artifactId>apns</artifactId>
-			    <version>${apns_version}</version>
-			</dependency>
-
+      		
       		<dependency>
 		           <groupId>com.github.fernandospr</groupId>
 		           <artifactId>javapns-jdk16</artifactId>
